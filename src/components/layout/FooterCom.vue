@@ -46,7 +46,7 @@
                     >
                     <router-link
                       class="btn_btn_link text-decoration-none fw-bold text-lg-end"
-                      :to="{ name: 'home' }"
+                      :to="{ name: 'profile' }"
                       >خاص بي</router-link
                     >
                     <router-link

@@ -15,8 +15,20 @@
       >
         <div class="row text-white d-flex justify-content-center text-center my-lg-3 py-4 py-lg-5">
           <strong>
-            <h2 class="fw-900" style="font-size: 30px">البيانات الشخصية</h2>
-            <p>هذا النص هو مثال لنص يمكن أن يستبدل</p>
+            <h2
+              v-if="$route.path === '/profile/change-pass'"
+              class="fw-900"
+              style="font-size: 30px"
+            >
+              شريحتي
+            </h2>
+            <h2
+              v-if="$route.path === '/profile/client-info'"
+              class="fw-900"
+              style="font-size: 30px"
+            >
+              البيانات الشخصية
+            </h2>
           </strong>
         </div>
       </div>
@@ -64,7 +76,7 @@
                     </div>
                   </div>
                   <!-- nested route -->
-                  <div class="col-md-8 ">
+                  <div class="col-md-8">
                     <router-view></router-view>
                   </div>
                 </div>
