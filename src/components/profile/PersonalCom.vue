@@ -7,7 +7,7 @@
           <div class="row">
             <form class="form-inline" @submit.prevent="clientLogin">
               <div class="row d-flex justify-content-start">
-                <div class="col-md-6 mt-4 d-flex justify-content-cente mt-lg-4 mb-lg-4">
+                <div class="col-md-12 col-lg-8 mt-4 d-flex justify-content-cente mt-lg-4 mb-lg-4">
                   <div class="row">
                     <!-- name-->
                     <div class="col-md-12 mb-3">
@@ -21,7 +21,6 @@
                           id="validationustomUsername"
                           placeholder="Username"
                           aria-describedby="inputGroupPrepend"
-                          v-model="user.full_name"
                         />
                         <div class="input-group-prepend me-3">
                           <button class="btn text-custom" type="button">
@@ -40,9 +39,8 @@
                           type="text"
                           class="form-control"
                           id="validationCustomUsername"
-                          placeholder="password"
+                          placeholder="رقم الهاتف"
                           aria-describedby="inputGroupPrepend"
-                          v-model="user.phone"
                         />
                         <div class="input-group-prepend me-3">
                           <button class="btn text-custom" type="button">
@@ -52,19 +50,19 @@
                       </div>
                     </div>
                     <!-- save -->
-                    <div class="col-md-11 mb-3">
+                    <div class="col-md-12 mb-3">
                       <label for="validationCustomUsername" class="me-3"></label>
-                      <div class="input-group m-2">
+                      <div class="">
                         <button
                           type="submit"
-                          style="background-color: #d600001f; width: 90%"
+                          style="background-color: #d600001f; width: 100%"
                           class="btn fw-bold text-danger"
                         >
                           حذف حسابي
+                          <div class="input-group-prepend me-3"></div>
                         </button>
                       </div>
                     </div>
-                    <div class="col-md-10 mt-3 d-flex justify-content-center"></div>
                   </div>
                 </div>
               </div>
@@ -75,44 +73,6 @@
     </div>
   </div>
 </template>
-
-<script>
-import axios from 'axios'
-export default {
-  data() {
-    return {
-      user: []
-    }
-  },
-  mounted() {
-    let user = localStorage.getItem('user')
-    if (!user) {
-      this.$router.push({ name: 'login' })
-    }
-    this.fetchclient()
-  },
-  methods: {
-    async fetchclient() {
-      const token = localStorage.getItem('token')
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-
-      await axios
-        .get('http://lawyer.phpv8.aait-d.com/api/client_web/profile', config)
-        .then((res) => {
-          this.user = res.data.data
-          console.log(this.user)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    }
-  }
-}
-</script>
 
 <style scoped>
 .form-control {
@@ -129,7 +89,7 @@ export default {
   box-shadow: 0 0 0 0.25rem #ebecf000 !important;
 }
 ::placeholder {
-  color: #ffffff !important;
+  color: #949494 !important;
   font-size: 14px !important;
 }
 .icon {
@@ -138,6 +98,15 @@ export default {
   right: 25px !important;
   color: #787878 !important;
   z-index: 2;
+}
+.input-group {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  border-radius: 8px;
+  width: 100%;
+  background-color: rgba(235, 236, 240, 0.8);
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

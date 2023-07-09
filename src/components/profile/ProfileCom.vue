@@ -15,11 +15,7 @@
       >
         <div class="row text-white d-flex justify-content-center text-center my-lg-3 py-4 py-lg-5">
           <strong>
-            <h2
-              v-if="$route.path === '/profile/change-pass'"
-              class="fw-900"
-              style="font-size: 30px"
-            >
+            <h2 v-if="$route.path === '/profile/mysim'" class="fw-900" style="font-size: 30px">
               شريحتي
             </h2>
             <h2
@@ -28,6 +24,15 @@
               style="font-size: 30px"
             >
               البيانات الشخصية
+            </h2>
+            <h2 v-if="$route.path === '/profile/complaints'" class="fw-900" style="font-size: 30px">
+              الشكاوي والإقتراحات
+            </h2>
+            <h2 v-if="$route.path === '/profile/privacy'" class="fw-900" style="font-size: 30px">
+              الشروط والاحكام
+            </h2>
+            <h2 v-if="$route.path === '/profile/orders'" class="fw-900" style="font-size: 30px">
+              طلباتي
             </h2>
           </strong>
         </div>
@@ -40,43 +45,88 @@
               <div class="card border-0">
                 <div class="row">
                   <!-- settings -->
-                  <div class="col-md-4">
-                    <div class="row d-flex justify-content-center">
-                      <div
-                        class="card border-0 text-center"
-                        style="width: 18rem; background-color: #f6fafc"
-                      >
-                        <ul class="list-group list-group-flush">
-                          <li class="list-group-item bg-transparent">
+                  <div class="col-md-5 col-lg-4 d-flex justify-content-center">
+                    <div class="card border-0 rounded-4 shadow" style="width: 18rem">
+                      <div class="card-header bg-transparent mt-3 bg-white text-center">
+                        <div class="card-body p-0 fw-bold">
+                          <div>
+                            <img
+                              width="100"
+                              height="100"
+                              style="border: 2px solid #ff9d0a"
+                              src="../../assets/images/almona.png"
+                              class="rounded-circle bg-dark"
+                              alt="img"
+                            />
+                          </div>
+
+                          <p class="mb-0">mohamed gamal</p>
+                          <strong>
+                            <p class="mb-0">955664400225485</p>
+                          </strong>
+                        </div>
+                      </div>
+                      <div class="card-body mb-1">
+                        <div class="card-body py-0">
+                          <p class="list-group-item mb-1 fw-bold bg-transparent">
                             <router-link
                               class="btn_btn_link text-decoration-none"
                               :to="{ name: 'client-info' }"
-                              >البيانات الشخصية</router-link
                             >
-                          </li>
-                          <li class="list-group-item bg-transparent">
+                              <FontAwesome class="" :icon="['far', 'user']" />
+                              البيانات الشخصية</router-link
+                            >
+                          </p>
+                          <p class="list-group-item mb-1 fw-bold bg-transparent">
                             <router-link
                               class="btn_btn_link text-decoration-none"
-                              :to="{ name: 'change-pass' }"
-                              >شريحتي</router-link
+                              :to="{ name: 'mysim' }"
                             >
-                          </li>
-                          <li class="list-group-item bg-transparent">عناويني</li>
-                          <li class="list-group-item bg-transparent">طلباتي</li>
-                          <li class="list-group-item bg-transparent">الشكاوي والاقتراحات</li>
-                          <li class="list-group-item bg-transparent">الشروط والاحكام</li>
-                          <li class="list-group-item bg-transparent text-danger">Delete Account</li>
-                          <li class="list-group-item bg-transparent text-danger">
-                            <button style="width: 100%" class="btn text-danger" @click="Logout()">
-                              تسجيل الخروج
-                            </button>
-                          </li>
-                        </ul>
+                              <FontAwesome class="" :icon="['far', 'credit-card']" />
+                              شريحتي</router-link
+                            >
+                          </p>
+                          <p class="list-group-item mb-1 fw-bold bg-transparent">
+                            <FontAwesome class="" :icon="['far', 'map']" />
+                            عناويني
+                          </p>
+                          <p class="list-group-item mb-1 pb-3 fw-bold bg-transparent">
+                            <router-link
+                              class="btn_btn_link text-decoration-none"
+                              :to="{ name: 'orders' }"
+                            >
+                              <FontAwesome class="" :icon="['far', 'calendar-check']" />
+                              طلباتي
+                            </router-link>
+                          </p>
+                          <p class="list-group-item mb-1 fw-bold bg-transparent">
+                            <router-link
+                              class="btn_btn_link text-decoration-none"
+                              :to="{ name: 'complaints' }"
+                            >
+                              <FontAwesome class="" :icon="['far', 'credit-card']" />
+                              الشكاوي والاقتراحات
+                            </router-link>
+                          </p>
+                          <p class="list-group-item mb-2 pb-2 fw-bold bg-transparent">
+                            <router-link
+                              class="btn_btn_link text-decoration-none"
+                              :to="{ name: 'privacy' }"
+                            >
+                              <FontAwesome class="" :icon="['far', 'chart-bar']" />
+                              الشروط والاحكام
+                            </router-link>
+                          </p>
+                          <button style="width: 100%" class="btn text-danger text-end p-0">
+                            <FontAwesome class="" :icon="['fas', 'arrow-right-from-bracket']" />
+                            تسجيل الخروج
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <!-- nested route -->
-                  <div class="col-md-8">
+                  <div class="col-md-7 col-lg-8 mt-4 mt-lg-0 mt-md-0">
                     <router-view></router-view>
                   </div>
                 </div>
@@ -93,57 +143,23 @@
 <script>
 import NavBarCom from '../layout/NavBarCom.vue'
 import FooterCom from '../layout/FooterCom.vue'
-
-import axios from 'axios'
 export default {
-  components: { NavBarCom, FooterCom },
-  data() {
-    return {
-      user: []
-    }
-  },
-  mounted() {
-    let user = localStorage.getItem('user')
-    if (!user) {
-      this.$router.push({ name: 'login' })
-    }
-    this.fetchclient()
-  },
-  methods: {
-    async fetchclient() {
-      const token = localStorage.getItem('token')
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-
-      await axios
-        .get('http://lawyer.phpv8.aait-d.com/api/client_web/profile', config)
-        .then((res) => {
-          this.user = res.data.data
-          console.log(this.user)
-        })
-        .catch((error) => {
-          console.error(error)
-        })
-    },
-    Logout() {
-      localStorage.clear()
-      this.$router.push({ name: 'login' })
-    }
-  }
+  components: { NavBarCom, FooterCom }
 }
 </script>
 
 <style scoped>
+a {
+  color: #000000 !important;
+}
 a:hover {
   color: #ffbe03 !important;
 }
-/* .router-link-active {
-  color: #ffbe03 !important;
-} */
 .router-link-exact-active {
   color: #ffbe03 !important;
+  padding-bottom: 5px;
+}
+.shadow {
+  box-shadow: 0 0.5rem 1rem rgba(230, 230, 230, 1) !important;
 }
 </style>

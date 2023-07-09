@@ -30,10 +30,25 @@ const router = createRouter({
           component: () => import('../components/profile/PersonalCom.vue')
         },
         {
-          path: 'change-pass',
-          name: 'change-pass',
-          component: () => import('../components/profile/ChangePassCom.vue')
-        }
+          path: 'mysim',
+          name: 'mysim',
+          component: () => import('../components/profile/MySIMCom.vue')
+        },
+        {
+          path: 'complaints',
+          name: 'complaints',
+          component: () => import('../components/profile/ComplaintsCom.vue')
+        },
+        {
+          path: 'privacy',
+          name: 'privacy',
+          component: () => import('../components/profile/PrivacyCom.vue')
+        },
+        {
+          path: 'orders',
+          name: 'orders',
+          component: () => import('../components/profile/OrdersCom.vue')
+        },
       ]
     },
     {

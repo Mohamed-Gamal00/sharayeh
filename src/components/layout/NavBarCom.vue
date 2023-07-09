@@ -2,7 +2,7 @@
 
   <div class="style">
     <nav
-      class="navbar navbar-expand-lg navbar-light p-0"
+      class="navbar navbar-expand-lg navbar-light p-0 mb-lg-4"
       style="position: relative; top: 20px"
     >
       <div class="container">
@@ -61,7 +61,7 @@
                 height: 50px;
                 border-radius: 12px;
               "
-              class="btn fw-bold mb-4 text-dark"
+              class="btn fw-bold mb-4 text-dark shadow"
             >
               <!-- <FontAwesome icon="circle-arrow-left" class="ms-2" /> -->
               تسجيل دخول
