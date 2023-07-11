@@ -19,6 +19,12 @@ const router = createRouter({
       component: () => import('../views/auth/RegisterView.vue')
     },
     {
+      path: '/recently-added',
+      name: 'RecentlyAdded',
+      component: () => import('../views/recentlyAdded/RecentlyAddedView.vue')
+    },
+    /* children */
+    {
       path: '/profile',
       name: 'profile',
       component: () => import('../views/profile/ProfileView.vue'),
@@ -49,17 +55,28 @@ const router = createRouter({
           name: 'orders',
           component: () => import('../components/profile/OrdersCom.vue')
         },
+        {
+          path: 'address',
+          name: 'address',
+          component: () => import('../components/profile/AddressCom.vue')
+        },
       ]
     },
+    /* end children */
     {
       path: '/basket',
       name: 'basket',
       component: () => import('../views/basket/BasketView.vue')
     },
     {
-      path: '/chipset',
-      name: 'chipset',
-      component: () => import('../views/chipset/ChipsetView.vue')
+      path: '/sim',
+      name: 'sim',
+      component: () => import('../views/sim/SIMcardsView.vue')
+    },
+    {
+      path: '/sim-info',
+      name: 'info',
+      component: () => import('../views/sim/InfoView.vue')
     },
     {
       path: '/server-erro',

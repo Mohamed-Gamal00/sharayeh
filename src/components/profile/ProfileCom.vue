@@ -34,6 +34,9 @@
             <h2 v-if="$route.path === '/profile/orders'" class="fw-900" style="font-size: 30px">
               طلباتي
             </h2>
+            <h2 v-if="$route.path === '/profile/address'" class="fw-900" style="font-size: 30px">
+              عنواني
+            </h2>
           </strong>
         </div>
       </div>
@@ -87,8 +90,13 @@
                             >
                           </p>
                           <p class="list-group-item mb-1 fw-bold bg-transparent">
-                            <FontAwesome class="" :icon="['far', 'map']" />
-                            عناويني
+                            <router-link
+                              class="btn_btn_link text-decoration-none"
+                              :to="{ name: 'address' }"
+                            >
+                              <FontAwesome class="" :icon="['far', 'map']" />
+                              عناويني
+                            </router-link>
                           </p>
                           <p class="list-group-item mb-1 pb-3 fw-bold bg-transparent">
                             <router-link

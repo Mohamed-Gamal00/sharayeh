@@ -1,6 +1,6 @@
 <template>
 
-  <div class="style">
+  <div class="style pt-lg-4">
     <nav
       class="navbar navbar-expand-lg navbar-light p-0 mb-lg-4"
       style="position: relative; top: 20px"
@@ -41,7 +41,7 @@
               ><span class="fw-bold">السلة</span></router-link
             >
 
-            <router-link class="m-2 ms-lg-4 me-lg-4" :to="{ name: 'chipset' }"
+            <router-link class="m-2 ms-lg-4 me-lg-4" :to="{ name: 'sim' }"
               ><span class="fw-bold">الشرائح</span></router-link
             >
             <router-link class="m-2 ms-lg-4 me-lg-4" :to="{ name: 'profile' }"

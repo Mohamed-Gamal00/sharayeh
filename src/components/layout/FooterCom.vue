@@ -41,7 +41,7 @@
                     >
                     <router-link
                       class="btn_btn_link text-decoration-none fw-bold text-lg-end"
-                      :to="{ name: 'chipset' }"
+                      :to="{ name: 'sim' }"
                       >الشرائح</router-link
                     >
                     <router-link

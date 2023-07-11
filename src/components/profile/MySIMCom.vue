@@ -5,7 +5,7 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-12 justify-content-center">
           <div class="row">
-            <form class="form-inline" @submit.prevent="clientLogin">
+            <form class="form-inline">
               <div class="row d-flex justify-content-start">
                 <div class="col-md-12 col-lg-8 mt-4 d-flex justify-content-cente mt-lg-4 mb-lg-4">
                   <div class="row">

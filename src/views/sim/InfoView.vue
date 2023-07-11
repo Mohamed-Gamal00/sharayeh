@@ -1,18 +1,18 @@
 <template>
   <NavBarCom />
-  <ChipsetCom />
+  <InfoCom />
   <FooterCom />
 </template>
 
 <script>
 import NavBarCom from '../../components/layout/NavBarCom.vue'
-import ChipsetCom from '../../components/chipset/ChipsetCom.vue'
+import InfoCom from '../../components/sim/InfoCom.vue'
 import FooterCom from '../../components/layout/FooterCom.vue'
 export default {
   name: 'HomeCom',
   components: {
     NavBarCom,
-    ChipsetCom,
+    InfoCom,
     FooterCom
   }
 }

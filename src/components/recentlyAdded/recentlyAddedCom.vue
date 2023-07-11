@@ -1,32 +1,39 @@
 <template>
+  <NavBarCom />
   <div>
     <section class="py-5">
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div class="col-md-10">
-            <div class="row justify-content-center text-center my-4">
-              <div>
-                <strong>
-                  <h3 class="fw-900" style="color: #3aa8f5; font-size: 30px">المضافة حديثاً</h3>
-                </strong>
-                <router-link :to="{ name: 'RecentlyAdded' }">
-                  <span class="text-center float-lg-start fw-bold" style="color: #3aa8f5"
-                    >عرض الكل</span
-                  >
-                </router-link>
-              </div>
+          <div
+            class="container-fluid"
+            style="
+              background-image: linear-gradient(
+                to right,
+                rgba(255, 157, 10, 1),
+                rgba(46, 155, 232, 0.726),
+                rgba(46, 154, 232, 1)
+              );
+            "
+          >
+            <div
+              class="row text-white d-flex justify-content-center text-center my-lg-3 py-3 py-lg-3"
+            >
+              <strong>
+                <h2 class="fw-900" style="font-size: 30px">المضافة حديثا</h2>
+                <p>هذا النص هو مثال لنص يمكن أن يستبدل</p>
+              </strong>
             </div>
           </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-5">
           <div class="col-md-11">
-            <div class="row justify-content-lg-around text-center">
+            <div class="row justify-content-lg-end text-center">
               <div
                 class="col-md-3 my-3 my-lg-0 d-flex justify-content-center"
                 v-for="news in News"
                 :key="news.id"
               >
-                <div class="card rounded-5 add-News">
+                <div class="card mt-4 rounded-5 add-News">
                   <div
                     class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
                   >
@@ -61,46 +68,18 @@
       </div>
     </section>
   </div>
+  <FooterCom />
 </template>
 
 <script>
-import almona from '@/assets/images/almona.png'
-
+import NavBarCom from '../../components/layout/NavBarCom.vue'
+import FooterCom from '../../components/layout/FooterCom.vue'
 export default {
-  data() {
-    return {
-      News: [
-        {
-          id: 1,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 2,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 3,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 4,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        }
-      ]
-    }
-  }
+  components: {
+    NavBarCom,
+    FooterCom
+  },
+  props: ['News']
 }
 </script>
 
