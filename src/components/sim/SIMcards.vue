@@ -45,7 +45,7 @@
           <div class="col-md-11">
             <div class="row my-4">
               <div>
-                <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span>
+                <!-- <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span> -->
                 <span class="float-end fw-900" style="color: #000000">شهر</span>
               </div>
             </div>
@@ -55,44 +55,36 @@
                 v-for="news in News"
                 :key="news.id"
               >
-                <div class="card rounded-5 add-News">
-                  <div
-                    class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
-                  >
-                    <img loading="lazy" :src="news.image" alt="img" />
-                  </div>
-                  <div class="card-body">
-                    <p class="fs-18 mb-0">
-                      {{ news.title }}
-                    </p>
-                    <p class="fs-18">
-                      {{ news.number }}
-                    </p>
-                    <p class="card-text d-inline ms-4">المدة : {{ news.time }}</p>
-                    <button
-                      style="
-                        width: 125px;
-                        height: 50px;
-                        border-radius: 16px;
-                        background-color: #ffbe0333;
-                        color: #ff9d0a !important;
-                      "
-                      class="btn me-4"
+                <router-link :to="{ name: 'sim-info' }">
+                  <div class="card rounded-5 add-News">
+                    <div
+                      class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
                     >
-                      أضف للعربة
-                    </button>
+                      <img loading="lazy" :src="news.image" alt="img" />
+                    </div>
+                    <div class="card-body">
+                      <p class="fs-18 mb-0">
+                        {{ news.title }}
+                      </p>
+                      <p class="fs-18">
+                        {{ news.number }}
+                      </p>
+                      <p class="card-text d-inline ms-4">المدة : {{ news.time }}</p>
+                      <button
+                        style="
+                          width: 125px;
+                          height: 50px;
+                          border-radius: 16px;
+                          background-color: #ffbe0333;
+                          color: #ff9d0a !important;
+                        "
+                        class="btn me-4"
+                      >
+                        أضف للعربة
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <!-- <div class="text-center position-relative">
-                  <div
-                    class="mx-auto rounded-4 d-flex align-items-center justify-content-center"
-                  >
-                    <img loading="lazy" :src="news.image" alt="img" />
-                  </div>
-                  <p class="fs-18 mt-5">
-                    {{ news.title }}
-                  </p>
-                </div> -->
+                </router-link>
               </div>
             </div>
           </div>
@@ -102,7 +94,7 @@
           <div class="col-md-11">
             <div class="row my-4">
               <div>
-                <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span>
+                <!-- <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span> -->
                 <span class="float-end fw-900" style="color: #000000">3 شهور</span>
               </div>
             </div>
@@ -159,7 +151,7 @@
           <div class="col-md-11">
             <div class="row my-4">
               <div>
-                <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span>
+                <!-- <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span> -->
                 <span class="float-end fw-900" style="color: #000000">6 شهور</span>
               </div>
             </div>
@@ -206,7 +198,7 @@
           <div class="col-md-11">
             <div class="row my-4">
               <div>
-                <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span>
+                <!-- <span class="float-start fw-bold" style="color: #3aa8f5">عرض الكل</span> -->
                 <span class="float-end fw-900" style="color: #000000">سنة</span>
               </div>
             </div>

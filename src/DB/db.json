@@ -1,0 +1,39 @@
+{
+  "data": {
+    "products": [
+      {
+        "id": 1,
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
+        "name": "test 1",
+        "price": 15,
+
+        "quantity": 3
+      },
+      {
+        "id": 2,
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
+        "name": "test 2",
+        "price": 15,
+
+        "quantity": 2
+      },
+      {
+        "id": 3,
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
+        "name": "test 3",
+        "price": 10,
+
+        "quantity": 3
+      },
+      {
+        "id": 4,
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
+        "name": "test 4",
+        "price": 10,
+
+        "quantity": 1
+      }
+    ],
+    "tax": 0.1
+  }
+}

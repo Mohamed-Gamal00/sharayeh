@@ -46,7 +46,7 @@
                     </div>
                     <!-- save -->
                     <div class="col-md-12 mb-3">
-                      <label for="validationCustomUsername" class="me-3"></label>
+                      <span class="me-3"></span>
                       <div class="">
                         <button
                           type="submit"

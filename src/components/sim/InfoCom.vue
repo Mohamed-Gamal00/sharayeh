@@ -42,7 +42,9 @@
                           <p class="card-text fs-16" style="color: #787878">تجديد لمرة شهر</p>
                         </li>
                         <li>
-                          <p class="card-text fs-16" style="color: #787878">السعر مميز 250 ر.س</p>
+                          <p class="card-text fs-16" style="color: #787878">
+                            السعر مميز <span class="fw-900">{{ price }}</span> ر.س
+                          </p>
                         </li>
                         <li>
                           <p class="card-text fs-16" style="color: #787878">
@@ -50,48 +52,63 @@
                           </p>
                         </li>
                       </ul>
-                      <div>
+                      <div class="my-3">
                         <button
                           class="btn my-lg-3 my-2 mx-1 border-0"
                           style="background-color: #ebecf0cc; border-radius: 8px; font-size: 18px"
                         >
                           <FontAwesome class="ms-2" :icon="['fas', 'cash-register']" />
-                          اسعار وسهولة الدفع
+                          <small>اسعار وسهولة الدفع</small>
                         </button>
                         <button
                           class="btn my-lg-3 mx-1 border-0"
                           style="background-color: #ebecf0cc; border-radius: 8px; font-size: 18px"
                         >
                           <FontAwesome class="ms-2" :icon="['fas', 'truck']" />
-                          الشحن السريع
+                          <small> الشحن السريع </small>
                         </button>
                       </div>
                       <p>تم شراءه 88 مرة</p>
+                      <!-- الكمية -->
                       <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-md-6 col-6">
                           <p class="mb-0 fw-900">الكمية</p>
                         </div>
                         <div class="col-md-6 col-6" dir="ltr">
                           <div class="quantity-field">
-                            <button class="value-button decrease-button" title="Azalt">-</button>
-                            <div class="number">0</div>
-                            <button class="value-button increase-button" title="Arrtır">+</button>
+                            <button
+                              @click="decrement()"
+                              class="value-button decrease-button"
+                              title="Azalt"
+                            >
+                              -
+                            </button>
+                            <div class="number">{{ count }}</div>
+                            <button
+                              @click="increment()"
+                              class="value-button increase-button"
+                              title="Arrtır"
+                            >
+                              +
+                            </button>
                           </div>
                         </div>
                       </div>
+                      <!-- السعر -->
                       <div
-                        class="row d-flex justify-content-lg-between justify-content-center align-items-center"
+                        class="row d-flex justify-content-lg-center mt-lg-2 justify-content-center align-items-center"
                       >
-                        <div class="col-md-6 col-6">
+                        <div class="col-6 col-md-6 col-lg-4">
                           <p class="mb-0">السعر</p>
-                          <p class="mb-0 fw-900">250 ر.س</p>
+                          <p class="mb-0 fw-900">{{ total }} ر.س</p>
                         </div>
-                        <div class="col-md-6 col-6" dir="ltr">
+                        <div class="col-6 col-md-6 col-lg-8" dir="ltr">
                           <button
                             class="btn my-3 mx-1 border-0"
                             style="
-                              background-color: #ebecf0cc;
+                              background-color: #ffbe03;
                               border-radius: 12px;
+                              width: 100%;
                               font-size: 18px;
                             "
                           >
@@ -125,8 +142,48 @@
   </div>
 </template>
 
-<script>
-export default {}
+<script setup>
+import { ref, computed } from 'vue'
+const count = ref(0)
+const price = ref(250)
+
+const total = computed(() => count.value * price.value)
+
+const increment = () => {
+  console.log('run')
+  count.value = count.value += 1
+}
+const decrement = () => {
+  console.log('run')
+  if (count.value === 0) {
+    alert('no result')
+  } else {
+    count.value = count.value -= 1
+  }
+}
+// export default {
+//   data() {
+//     return {
+//       count: 0,
+//       price: 2,
+//       total: 0
+//     }
+//   },
+//   methods: {
+//     increment() {
+//       console.log('run')
+//       this.count = this.count += 1
+//     },
+//     decrement() {
+//       console.log('run')
+//       if (this.count === 0) {
+//         alert('no result')
+//       } else {
+//         this.count = this.count -= 1
+//       }
+//     }
+//   }
+// }
 </script>
 
 <style scoped>
@@ -187,5 +244,4 @@ export default {}
 .quantity-field .number::selection {
   background: none;
 }
-
 </style>

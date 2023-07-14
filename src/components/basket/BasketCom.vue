@@ -22,7 +22,7 @@
       <div class="container mt-5">
         <div class="row d-flex align-items-center">
           <div class="col-md-9 p-0">
-            <div class="table-responsive p-2">
+            <div v-if="products.length > 0" class="table-responsive p-2">
               <table class="table bdr mb-0">
                 <thead class="table-dark">
                   <tr class="text-center">
@@ -41,10 +41,15 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-center" v-for="basket in 4" :key="basket">
+                  <tr class="text-center" v-for="product in products" :key="product.id">
                     <td>
                       <div>
-                        <button type="button" class="btn ms-2 me-1" aria-label="Close">
+                        <button
+                          @click="deleteItem(product.id)"
+                          type="button"
+                          class="btn ms-2 me-1"
+                          aria-label="Close"
+                        >
                           <FontAwesome
                             class="btnClose text-danger"
                             :icon="['far', 'rectangle-xmark']"
@@ -53,8 +58,8 @@
                         <img
                           width="50"
                           height="50"
-                          src="../../assets/images/Subscriptions.png"
-                          alt="img"
+                          :src="product.image"
+                          :alt="product.name"
                           style="object-fit: cover"
                         />
                       </div>
@@ -71,12 +76,21 @@
                     </td>
                     <td>
                       <div style="margin: 13px auto !important">
-                        <span>200 ر.س</span>
+                        <span>{{ product.price }} ر.س</span>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
+            </div>
+            <div v-else class="alert alert-warning text-center" role="alert">
+              <p class="mb-5">السلة فارغة</p>
+
+              <img
+                class="img-fluid"
+                src="https://www.freeiconspng.com/uploads/sim-card-icon-1.png"
+                alt="img"
+              />
             </div>
           </div>
           <div class="col-md-3 d-flex justify-content-center my-3 my-lg-0 justify-content-lg-start">
@@ -92,13 +106,13 @@
                 <div class="card-body py-0">
                   <span class="card-title float-end">المبلغ الفرعي</span>
                   <strong>
-                    <span class="card-title float-start">900 ر.س</span>
+                    <span class="card-title float-start">{{ SubPrice }} ر.س</span>
                   </strong>
                 </div>
                 <div class="card-body py-0">
-                  <span class="card-title float-end">ضريبة التوصيل</span>
+                  <span class="card-title float-end"> ضريبة التوصيل ({{ tax }}) </span>
                   <strong>
-                    <span class="card-title float-start">50 ر.س</span>
+                    <span class="card-title float-start">{{ TotalTax }} ر.س</span>
                   </strong>
                 </div>
               </div>
@@ -108,7 +122,7 @@
                 <div class="card-body">
                   <span class="card-title float-end">المبلغ الكلي</span>
                   <strong>
-                    <span class="card-title float-start">950 ر.س</span>
+                    <span class="card-title float-start">{{ TotalPrice }} ر.س</span>
                   </strong>
                 </div>
               </div>
@@ -126,10 +140,34 @@
   </div>
 </template>
 
-<script>
-export default {}
-</script>
+<script setup>
+import axios from 'axios'
+import { ref, onMounted, computed } from 'vue'
+const products = ref([])
+const tax = ref()
+const fetchproducts = async () => {
+  await axios.get('http://localhost:3000/data').then((res) => {
+    console.log(res)
+    products.value = res.data.products
+    tax.value = res.data.tax
+  })
+}
 
+const deleteItem = ($event) => {
+  const productId = $event
+  products.value = products.value.filter((product) => product.id !== productId)
+}
+
+const SubPrice = computed(() => products.value.reduce((total, product) => total + product.price, 0))
+const TotalTax = computed(() =>
+  products.value.reduce((total, product) => total + product.price * tax.value, 0)
+)
+const TotalPrice = computed(() => TotalTax.value + SubPrice.value)
+
+onMounted(() => {
+  fetchproducts()
+})
+</script>
 <style scoped>
 table {
   width: 100%;
@@ -161,8 +199,8 @@ table button:focus:not(:focus-visible) {
   /* border: 10px solid; */
 }
 .bdr {
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
   border: #8080801e;
   overflow: hidden;
 }

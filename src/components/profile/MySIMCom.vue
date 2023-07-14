@@ -5,7 +5,7 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-12 justify-content-center">
           <div class="row">
-            <form class="form-inline">
+            <form class="form-inline" id="form">
               <div class="row d-flex justify-content-start">
                 <div class="col-md-12 col-lg-8 mt-4 d-flex justify-content-cente mt-lg-4 mb-lg-4">
                   <div class="row">
@@ -24,12 +24,12 @@
                     </div>
                     <!-- تاريخ الانتهاء -->
                     <div class="col-md-6 mb-3">
-                      <label for="validationCustomUsername" class="mb-2 me-3">تاريخ الانتهاء</label>
+                      <label for="enddate" class="mb-2 me-3">تاريخ الانتهاء</label>
                       <div class="input-group">
                         <input
                           type="text"
                           class="form-control"
-                          id="validationCustomUsername"
+                          id="enddate"
                           placeholder="30 / 7/ 2023"
                           aria-describedby="inputGroupPrepend"
                         />
@@ -37,12 +37,12 @@
                     </div>
                     <!-- تاريخ التجديد -->
                     <div class="col-md-6 mb-3">
-                      <label for="validationCustomUsername" class="mb-2 me-3">تاريخ التجديد</label>
+                      <label for="validationCustomUsernam" class="mb-2 me-3">تاريخ التجديد</label>
                       <div class="input-group">
                         <input
                           type="text"
                           class="form-control"
-                          id="validationCustomUsername"
+                          id="validationCustomUsernam"
                           placeholder="30 / 7/ 2023"
                           aria-describedby="inputGroupPrepend"
                         />
@@ -51,12 +51,12 @@
 
                     <!-- الرقم التسلسلي-->
                     <div class="col-md-12 mb-3">
-                      <label for="validationCustomUsername" class="mb-2 me-3">الرقم التسلسلي</label>
+                      <label for="validationCustomUsernum" class="mb-2 me-3">الرقم التسلسلي</label>
                       <div class="input-group">
                         <input
                           type="text"
                           class="form-control"
-                          id="validationCustomUsername"
+                          id="validationCustomUsernum"
                           placeholder="2484512225554546464646"
                           aria-describedby="inputGroupPrepend"
                         />
@@ -64,12 +64,12 @@
                     </div>
                     <!-- مدة الاشتراك-->
                     <div class="col-md-6 mb-3">
-                      <label for="validationCustomUsername" class="mb-2 me-3">مدة الاشتراك</label>
+                      <label for="validationCustomUserage" class="mb-2 me-3">مدة الاشتراك</label>
                       <div class="input-group">
                         <input
                           type="text"
                           class="form-control"
-                          id="validationCustomUsername"
+                          id="validationCustomUserage"
                           placeholder="اشتراك شهري"
                           aria-describedby="inputGroupPrepend"
                         />
@@ -77,12 +77,14 @@
                     </div>
                     <!-- المبلغ المدفوع-->
                     <div class="col-md-6 mb-3">
-                      <label for="validationCustomUsername" class="mb-2 me-3">المبلغ المدفوع</label>
+                      <label for="validationCustomUsertotal" class="mb-2 me-3"
+                        >المبلغ المدفوع</label
+                      >
                       <div class="input-group">
                         <input
                           type="text"
                           class="form-control"
-                          id="validationCustomUsername"
+                          id="validationCustomUsertotal"
                           placeholder="250 ر.س"
                           aria-describedby="inputGroupPrepend"
                         />
@@ -90,7 +92,7 @@
                     </div>
                     <!-- save -->
                     <div class="col-md-12 mb-3">
-                      <label for="validationCustomUsername" class="me-3"></label>
+                      <span class="me-3"></span>
                       <div class="">
                         <button
                           type="submit"

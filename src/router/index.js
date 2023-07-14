@@ -75,7 +75,7 @@ const router = createRouter({
     },
     {
       path: '/sim-info',
-      name: 'info',
+      name: 'sim-info',
       component: () => import('../views/sim/InfoView.vue')
     },
     {

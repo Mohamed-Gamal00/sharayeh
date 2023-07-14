@@ -158,7 +158,8 @@ export default {
 
 <style scoped>
 a {
-  color: #000000 !important;
+  color: #5D5D5D !important;
+  transition: all 0.2s ease-in-out;
 }
 a:hover {
   color: #ffbe03 !important;
