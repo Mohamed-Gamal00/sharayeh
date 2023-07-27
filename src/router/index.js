@@ -79,6 +79,11 @@ const router = createRouter({
       component: () => import('../views/sim/InfoView.vue')
     },
     {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('../views/contact/ContactViw.vue')
+    },
+    {
       path: '/server-erro',
       name: 'servererror',
       component: () => import('../views/ServerError.vue')

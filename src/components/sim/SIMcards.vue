@@ -15,7 +15,7 @@
         <div class="row text-white d-flex justify-content-center text-center my-lg-3 py-4 py-lg-5">
           <strong>
             <h2 class="fw-900" style="font-size: 30px">الشرائح</h2>
-            <p>هذا النص هو مثال لنص يمكن أن يستبدل</p>
+            <!-- <p>هذا النص هو مثال لنص يمكن أن يستبدل</p> -->
           </strong>
         </div>
       </div>

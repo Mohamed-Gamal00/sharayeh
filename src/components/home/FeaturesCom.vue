@@ -1,9 +1,9 @@
 <template>
   <section class="py-5">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-md-10">
-          <div class="row justify-content-center text-center">
+          <div class="row justify-content-center my-5 text-center">
             <div>
               <strong>
                 <h3 class="fw-900" style="color: #3aa8f5; font-size: 30px">ما يميزنا</h3>
@@ -31,10 +31,10 @@
                 >
                   <img loading="lazy" :src="card.image" alt="img" />
                 </div>
-                <p class="fs-18g my-3">
+                <p class="my-3 fw-900">
                   {{ card.title }}
                 </p>
-                <p class="fs-18g my-3">
+                <p class="fs-18 my-3" style="color: #5d5d5d">
                   {{ card.desc }}
                 </p>
               </div>
@@ -72,9 +72,9 @@ export default {
           desc: 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة',
           image: withyou
         }
-      ],
+      ]
     }
-  },
+  }
 }
 </script>
 

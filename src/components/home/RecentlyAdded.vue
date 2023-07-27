@@ -22,7 +22,7 @@
           <div class="col-md-11">
             <div class="row justify-content-lg-around text-center">
               <div
-                class="col-md-3 my-3 my-lg-0 d-flex justify-content-center"
+                class="col-md-4 col-lg-3 my-3 my-lg-0 d-flex justify-content-center"
                 v-for="news in News"
                 :key="news.id"
               >

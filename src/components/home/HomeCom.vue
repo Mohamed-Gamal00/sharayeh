@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-header vh-100" style="direction: rtl">
+  <div class="bg-header" style="direction: rtl">
     <!-- text and image -->
     <NavBarCom />
     <div class="container-fluid">
-      <div class="row align-items-center vh-100 m-0 p-0">
+      <div class="row align-items-center m-0 p-0">
         <div class="row d-flex justify-content-center">
           <div class="col-md-10">
-            <div class="row align-items-center justify-content-between mb-2">
-              <div class="col-lg-5 fw-bold align-middle text-center text-lg-end">
+            <div class="row mt-lg-5 align-items-center justify-content-between">
+              <div class="col-lg-5 fw-bold align-middle text-end text-lg-end">
                 <h1 class="pb-3 lh-lg" style="color: #1f1e1e">
                   <strong>
                     سجل الأن واحصل علي
@@ -18,13 +18,12 @@
                   هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد
                   النص العربى
                 </p>
-                <button
+                <LoginComVue />
+                <!-- <button
                   style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
-                  class="btn fw-bold mb-4 text-dark"
+                  class="btn fw-bold mb-4 border-0 text-dark"
                 >
-                  <!-- <FontAwesome icon="circle-arrow-left" class="ms-2" /> -->
-                  تسجيل دخول
-                </button>
+                </button> -->
               </div>
               <div class="col-lg-6 text-center mt-sm-4 text-lg-start">
                 <!-- <img loading="lazy"
@@ -47,21 +46,21 @@
     <!-- text and image -->
     <div class="container-fluid py-5" style="position: relative">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-10">
-          <div class="row align-items-center justify-content-between mb-2">
-            <div class="col-lg-5 fw-bold align-middle text-center text-lg-end">
+        <div class="col-md-11">
+          <div class="row align-items-center justify-content-around mb-2">
+            <div class="col-lg-5 col-md-5 fw-bold text-end text-lg-end">
               <div class="circleshape"></div>
               <div class="circle"></div>
 
-              <p class="pb-3" style="color: #1f1e1e">
+              <h4 class="pb-3 fw-bold lh-custom" style="color: #1f1e1e">
                 هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة
-              </p>
-              <p class="pb-3" style="color: #1f1e1e">
+              </h4>
+              <p class="pb-3" style="color: #1f1e1e;line-height: 1.65rem;">
                 هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد
                 النص العربى، حيث يمكنك أن تولد مثل هذا النص
               </p>
             </div>
-            <div class="col-lg-6 text-center mt-sm-4 text-lg-start">
+            <div class="col-lg-5 col-md-6 text-center my-3 text-lg-start">
               <img
                 loading="lazy"
                 class="img-fluid rounded-3"
@@ -144,10 +143,11 @@
 </template>
 
 <script>
+import NavBarCom from '../../components/layout/NavBarCom.vue'
 import FeaturesCom from '../home/FeaturesCom.vue'
 import SubscriptionsCom from '../home/SubscriptionsCom.vue'
 import RecentlyAdded from '../home/RecentlyAdded.vue'
-import NavBarCom from '../../components/layout/NavBarCom.vue'
+import LoginComVue from '../auth/LoginCom.vue'
 import FooterCom from '../../components/layout/FooterCom.vue'
 export default {
   name: 'HomeCom',
@@ -156,6 +156,7 @@ export default {
     FeaturesCom,
     SubscriptionsCom,
     RecentlyAdded,
+    LoginComVue,
     FooterCom
   },
   data() {
@@ -165,25 +166,35 @@ export default {
 </script>
 
 <style scoped>
+
+@media only screen and (max-width: 600px) {
+  .bg-header {
+    background-image: url('@/assets/images/header.png');
+    background-position: right; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: initial;
+  }
+}
 @media only screen and (min-width: 1200px) {
   .bg-header {
     background-image: url('@/assets/images/header.png');
     background-position: left; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: initial;
+    height: 100vh;
   }
   .circleshape {
     z-index: 1;
     position: absolute;
     left: 0px;
     right: 60px;
-    top: 29%;
+    top: 35%;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border: 1px dashed #ffb4052e;
-    width: 73px;
-    height: 73px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     background: #ffb4052e;
   }

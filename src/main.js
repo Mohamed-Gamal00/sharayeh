@@ -1,15 +1,3 @@
-// import { createApp } from 'vue'
-// import { createPinia } from 'pinia'
-
-// import App from './App.vue'
-// import router from './router'
-
-// const app = createApp(App)
-
-// app.use(createPinia())
-// app.use(router)
-
-// app.mount('#app')
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -26,15 +14,9 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import VueSnip from 'vue-snip'
-/* token */
-import setAuthHeader from "@/utils/setAuthHeader";
-if (localStorage.token) {
-  setAuthHeader(localStorage.token);
-} else {
-  setAuthHeader(false);
-}
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:3001'
 library.add(fas, far, fab)
-/* phone number */
 const app = createApp(App)
 .use(store)
 app.use(VueSweetalert2)

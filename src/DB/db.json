@@ -6,7 +6,6 @@
         "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
         "name": "test 1",
         "price": 15,
-
         "quantity": 3
       },
       {
@@ -14,7 +13,6 @@
         "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
         "name": "test 2",
         "price": 15,
-
         "quantity": 2
       },
       {
@@ -22,7 +20,6 @@
         "image": "https://upload.wikimedia.org/wikipedia/en/thumb/e/e2/IMG_Academy_Logo.svg/800px-IMG_Academy_Logo.svg.png",
         "name": "test 3",
         "price": 10,
-
         "quantity": 3
       },
       {

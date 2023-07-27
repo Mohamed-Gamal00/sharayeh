@@ -5,21 +5,21 @@
         <div class="row">
           <footer>
             <!-- Footer Start -->
-            <div class="text-light" style="margin-top: 6rem">
+            <div class="text-light" style="margin-top: 2rem">
               <div class="container-fluid">
-                <div class="row d-flex justify-content-lg-around">
+                <div class="row d-flex justify-content-lg-around mb-4">
                   <!--sharayeh-->
-                  <div class="col-md-6 col-lg-3 text-center text-lg-end">
-                    <div style="position: relative; bottom: 30px">
-                      <span class="">
+                  <div class="col-md-12 col-lg-3 text-center text-md-center text-lg-end">
+                    <div>
+                      <div class="my-4">
                         <img
                           loading="lazy"
                           src="@/assets/images/logofooter.png"
-                          width="100"
-                          height="100"
+                          width="80"
+                          height="80"
                           alt="img"
                         />
-                      </span>
+                      </div>
                       <p>
                         هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
                         مولد النص العربى
@@ -27,8 +27,8 @@
                     </div>
                   </div>
                   <!-- أقسام الموقع -->
-                  <div class="col-md-6 col-lg-2 text-lg-end">
-                    <p class="text-black text-center text-lg-end mb-4 fs-20 fw-900">أقسام الموقع</p>
+                  <div class="col-md-12 col-lg-2 text-md-center text-lg-end">
+                    <p class="text-black text-center text-lg-end my-4 fs-20 fw-900">أقسام الموقع</p>
                     <router-link
                       class="btn_btn_link text-decoration-none fw-bold text-lg-end"
                       :to="{ name: 'home' }"
@@ -51,26 +51,35 @@
                     >
                     <router-link
                       class="btn_btn_link text-decoration-none fw-bold text-lg-end"
-                      :to="{ name: 'home' }"
+                      :to="{ name: 'contact' }"
                     >
                       تواصل معنا
                     </router-link>
                   </div>
                   <!-- تواصل معنا -->
-                  <div class="col-md-6 col-lg-2 text-lg-end text-center">
-                    <p class="text-black text-center text-lg-end mb-4 fs-20 fw-900">تواصل معنا</p>
+                  <div class="col-md-12 col-lg-2 text-lg-end text-center">
+                    <p class="text-black text-center text-lg-end my-4 fs-20 fw-900">تواصل معنا</p>
 
-                    <div class="card bg-transparent border-0 rounded-5 mt-2 bg-black" style="width: 100%">
-                      <div class="card-body text-black bg-transparent">
-                        <p class="card-title fs-16 fw-bold">
-                          <FontAwesome class="ms-2" :icon="['far', 'envelope']" />البريد الالكتروني
-                        </p>
-                        <p class="card-text fs-14 p-0">mg232416@gmail.com</p>
-                        <p class="card-title fs-16 fw-bold">
-                          <FontAwesome class="ms-2 fs-16" icon="phone-volume" />
-                          رقم الجوال
-                        </p>
-                        <p class="card-text fs-14">01006789317</p>
+                    <div class="card bg-transparent border-0 rounded-5 mt-2" style="width: 100%">
+                      <div class="card-body py-0 text-black bg-transparent">
+                        <div>
+                          <p class="card-title mb-0 fs-16 fw-bold">
+                            <FontAwesome class="ms-2" :icon="['far', 'envelope']" />البريد
+                            الالكتروني
+                          </p>
+                          <small class="card-text fs-14 p-0 me-md-4" style="color: #787878"
+                            >mg232416@gmail.com</small
+                          >
+                        </div>
+                        <div class="mt-3">
+                          <p class="card-title mb-0 fs-16 fw-bold">
+                            <FontAwesome class="ms-2 fs-16" icon="phone-volume" />
+                            رقم الجوال
+                          </p>
+                          <small class="card-text fs-14 me-md-4" style="color: #787878"
+                            >01006789317</small
+                          >
+                        </div>
                         <div class="d-flex justify-content-center justify-content-lg-start pt-2">
                           <a
                             class="btnn btn-outline-light btn-social"
@@ -115,7 +124,7 @@
                     <p>الشروط والاحكام</p> -->
                   </div>
                   <!-- زر التواصل -->
-                  <div class="col-md-6 text-center col-lg-2">
+                  <div class="col-md-12 text-center col-lg-2">
                     <div
                       class="card border-0 rounded-5 mt-2 bg-black"
                       style="width: 100%; background-color: transparent !important"
@@ -154,7 +163,7 @@
               <div class="container">
                 <div class="row">
                   <div class="col-md-12 text-center mb-3 mb-md-0">
-                    <p>جميع الحقوق محفوظة لموقع &copy; My SIM 2023</p>
+                    <p style="color: #787878 !important">جميع الحقوق محفوظة لموقع &copy; My SIM 2023</p>
                   </div>
                 </div>
               </div>
@@ -166,7 +175,6 @@
     </div>
   </div>
 </template>
-
 
 <style scoped>
 a,

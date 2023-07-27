@@ -10,11 +10,15 @@
                   <button
                     @click="openModal()"
                     type="button"
-                    class="btn btn-primary"
-                    style="background-color: #7d712a; border: none"
+                    style="
+                      background-color: #ffbe03;
+                      width: 160px;
+                      height: 50px;
+                      border-radius: 12px;
+                    "
+                    class="btn fw-bold mb-4 border-0 text-dark"
                   >
                     تسجيل الدخول
-                    <span><FontAwesome style="color: orange" icon="user-plus" /></span>
                   </button>
                   <!-- modal login -->
                   <transition name="fade">
@@ -181,7 +185,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2 !important;
+  z-index: 2
 }
 .modalpopup > div {
   background-color: #fff;

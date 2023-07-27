@@ -15,13 +15,13 @@
         <div class="row text-white d-flex justify-content-center text-center my-lg-3 py-4 py-lg-5">
           <strong>
             <h2 class="fw-900" style="font-size: 30px">السلة</h2>
-            <p>هذا النص هو مثال لنص يمكن أن يستبدل</p>
+            <!-- <p>هذا النص هو مثال لنص يمكن أن يستبدل</p> -->
           </strong>
         </div>
       </div>
       <div class="container mt-5">
         <div class="row d-flex align-items-center">
-          <div class="col-md-9 p-0">
+          <div class="col-md-6 col-lg-9 p-0">
             <div v-if="products.length > 0" class="table-responsive p-2">
               <table class="table bdr mb-0">
                 <thead class="table-dark">
@@ -83,17 +83,21 @@
                 </tbody>
               </table>
             </div>
-            <div v-else class="alert alert-warning text-center" role="alert">
+            <div v-else class="alert alert-warning text-center mb-0 mx-3" role="alert">
               <p class="mb-5">السلة فارغة</p>
 
               <img
                 class="img-fluid"
-                src="https://www.freeiconspng.com/uploads/sim-card-icon-1.png"
+                height="240"
+                width="240"
+                src="https://cdn-icons-png.flaticon.com/512/523/523099.png?w=740&t=st=1690205283~exp=1690205883~hmac=0364e1a65f95a45f682f5f7cce3256beaa034c45f17084b52fd6f91fecb63d06"
                 alt="img"
               />
             </div>
           </div>
-          <div class="col-md-3 d-flex justify-content-center my-3 my-lg-0 justify-content-lg-start">
+          <div
+            class="col-md-6 col-lg-3 d-flex justify-content-center my-3 my-lg-0 justify-content-lg-start"
+          >
             <div class="card border-0 shadow" style="width: 18rem">
               <div class="card-header bg-white">
                 <div class="card-body fw-bold">
@@ -126,12 +130,7 @@
                   </strong>
                 </div>
               </div>
-              <button
-                class="btn m-3 rounded-3 fw-900"
-                style="background-color: rgba(255, 190, 3, 0.2); color: #ff9d0a"
-              >
-                اطلب الآن
-              </button>
+              <PersonalInfoComVue />
             </div>
           </div>
         </div>
@@ -141,13 +140,13 @@
 </template>
 
 <script setup>
+import PersonalInfoComVue from './payment/PersonalInfoCom.vue'
 import axios from 'axios'
 import { ref, onMounted, computed } from 'vue'
 const products = ref([])
 const tax = ref()
 const fetchproducts = async () => {
-  await axios.get('http://localhost:3000/data').then((res) => {
-    console.log(res)
+  await axios.get('/data').then((res) => {
     products.value = res.data.products
     tax.value = res.data.tax
   })

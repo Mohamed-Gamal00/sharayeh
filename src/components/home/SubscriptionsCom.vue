@@ -16,11 +16,11 @@
         </div>
         <div class="row justify-content-center mt-lg-4">
           <div class="col-md-10">
-            <div class="row justify-content-around text-center">
-              <div class="col-md-3 my-3" v-for="subscrip in subscriptions" :key="subscrip.id">
-                <div class="card border-0 text-center subscriptions">
+            <div class="row justify-content-start text-center">
+              <div class="col-md-4 col-lg-3 my-3" v-for="subscrip in subscriptions" :key="subscrip.id">
+                <div class="card border text-center subscriptions">
                   <div class="mx-auto d-flex align-items-center justify-content-center">
-                    <img loading="lazy" :src="subscrip.image" alt="img" />
+                    <img loading="lazy" class="img-fluid" :src="subscrip.image" alt="img" />
                   </div>
                   <p class="fs-18 my-3 fw-900" style="color: #1176c9">
                     {{ subscrip.title }}
@@ -67,4 +67,20 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.border {
+  /* border: 1px solid #CDCDCD !important; */
+  border-top-left-radius: 26px;
+  border-bottom-left-radius: 26px;
+  border-bottom-right-radius: 25px;
+  transition: all 0.3s ease-in-out;
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to right, #1176c9cf, #1176c921) border-box;
+  border: 1px solid transparent !important;
+}
+/* .border:hover {
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(to right, #1176c9cf, #1176c921) border-box;
+  border: 1px solid transparent !important;
+} */
+</style>
