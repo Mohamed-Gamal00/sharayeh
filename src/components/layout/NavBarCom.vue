@@ -43,7 +43,25 @@
             >
           </div>
 
-          <LoginComVue />
+          <!-- <LoginComVue /> -->
+          <button
+            v-if="!user"
+            @click="this.$router.push({ name: 'login' })"
+            type="button"
+            style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
+            class="btn fw-bold mb-4 border-0 text-dark"
+          >
+            تسجيل الدخول
+          </button>
+          <button
+            v-if="user"
+            @click="Logout()"
+            type="button"
+            style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
+            class="btn fw-bold mb-4 border-0 text-dark"
+          >
+            تسجيل الخروج
+          </button>
           <!-- <button
               style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
               class="btn fw-bold mb-4 text-dark shadow"
@@ -57,14 +75,26 @@
 </template>
 
 <script>
-import LoginComVue from '../auth/LoginCom.vue'
+// import LoginComVue from '../auth/LoginCom.vue'
 
 export default {
   components: {
-    LoginComVue
+    // LoginComVue
   },
   name: 'NavBarCom',
+  data() {
+    return {
+      user: null
+    };
+  },
+  methods: {
+    Logout() {
+      localStorage.clear()
+      this.$router.push({ name: 'home' })
+    }
+  },
   mounted() {
+    this.user = localStorage.getItem('token')
     window.scrollTo(0, 0)
   }
 }

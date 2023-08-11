@@ -36,14 +36,18 @@
                       <h5 class="card-title fw-900">وصف المنتج</h5>
                       <ul class="px-5 py-3">
                         <li>
-                          <p class="card-text fs-16" style="color: #787878">شريحة موبيلي</p>
-                        </li>
-                        <li>
-                          <p class="card-text fs-16" style="color: #787878">تجديد لمرة شهر</p>
+                          <p class="card-text fs-16" style="color: #787878">
+                            شريحة {{ SingleSim.type }}
+                          </p>
                         </li>
                         <li>
                           <p class="card-text fs-16" style="color: #787878">
-                            السعر مميز <span class="fw-900">{{ price }}</span> ر.س
+                            تجديد لمرة {{ SingleSim.period }}
+                          </p>
+                        </li>
+                        <li>
+                          <p class="card-text fs-16" style="color: #787878">
+                            السعر مميز <span class="fw-900">{{ SingleSim.price }}</span> ر.س
                           </p>
                         </li>
                         <li>
@@ -68,25 +72,25 @@
                           <small> الشحن السريع </small>
                         </button>
                       </div>
-                      <p>تم شراءه 88 مرة</p>
+                      <p>تم شراءه {{ parseInt(SingleSim['selling-count']) }} مرة</p>
                       <!-- الكمية -->
                       <div class="row d-flex justify-content-between align-items-center">
                         <div class="col-md-6 col-6">
                           <p class="mb-0 fw-900">الكمية</p>
                         </div>
-                        <div class="col-md-6 col-6" dir="ltr">
+                        <div class="col-md-6 col-6" dir="rtl">
                           <div class="quantity-field">
                             <button
                               @click="decrement()"
-                              class="value-button decrease-button"
+                              class="value-button decrease-button rounded-0"
                               title="Azalt"
                             >
                               -
                             </button>
-                            <div class="number">{{ count }}</div>
+                            <input class="number" v-model="qty" />
                             <button
                               @click="increment()"
-                              class="value-button increase-button"
+                              class="value-button increase-button rounded-0"
                               title="Arrtır"
                             >
                               +
@@ -105,6 +109,7 @@
                         <div class="col-6 col-md-6 col-lg-8" dir="ltr">
                           <button
                             class="btn my-3 mx-1 border-0"
+                            @click="AddToCart()"
                             style="
                               background-color: #ffbe03;
                               border-radius: 12px;
@@ -142,48 +147,113 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
-const count = ref(0)
-const price = ref(250)
-
-const total = computed(() => count.value * price.value)
-
-const increment = () => {
-  console.log('run')
-  count.value = count.value += 1
-}
-const decrement = () => {
-  console.log('run')
-  if (count.value === 0) {
-    alert('no result')
-  } else {
-    count.value = count.value -= 1
+<script>
+import { ref } from 'vue'
+import axios from 'axios'
+export default {
+  props: {
+    SingleSim: Object
+  },
+  data() {
+    return {
+      qty: ref(0),
+      price: this.SingleSim.price,
+      sim_id: '' // Initialize sim_id to null
+    }
+  },
+  computed: {
+    total() {
+      return this.qty * this.price
+    }
+  },
+  watch: {
+    SingleSim: {
+      immediate: true, // Run the watcher immediately on component mount
+      handler(newVal) {
+        if (newVal) {
+          this.price = newVal.price
+          this.sim_id = this.SingleSim.id
+        }
+      }
+    }
+  },
+  methods: {
+    increment() {
+      console.log('run')
+      this.qty += 1
+    },
+    decrement() {
+      console.log('run')
+      if (this.qty === 0) {
+        alert('no result')
+      } else {
+        this.qty -= 1
+      }
+    },
+    async AddToCart() {
+      let token = localStorage.getItem('token')
+      console.log('add to cart process')
+      await axios
+        .post(
+          `/add-cart`,
+          {
+            qty: this.qty,
+            sim_id: this.sim_id
+          },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          alert('add to card success')
+        })
+        .catch((err) => {
+          console.log(err)
+          alert('some thing went wrong')
+        })
+      // setTimeout(() => {
+      //   this.name = "";
+      //   this.number = "";
+      //   this.v$.number.$errors[0].$message = "";
+      //   this.v$.name.$errors[0].$message = "";
+      // });
+      // if (!this.v$.$error) {
+      //   if (result.data.success == true) {
+      //     console.log('data true provider added success')
+      //     this.$swal.fire({
+      //       toast: true,
+      //       icon: 'success',
+      //       title: 'تم الاضافة بنجاح ',
+      //       animation: false,
+      //       position: 'top-right',
+      //       showConfirmButton: false,
+      //       timer: 3000,
+      //       timerProgressBar: true,
+      //       didOpen: (toast) => {
+      //         toast.addEventListener('mouseenter', this.$swal.stopTimer)
+      //         toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+      //       }
+      //     })
+      //     this.AddDoctorOpen = false
+      //     this.loadproviders()
+      //   } else {
+      //     console.log('data false')
+      //   }
+      // }
+      //  else {
+      //   console.log('form validated faild')
+      // }
+    }
+  },
+  created() {
+    if (this.SingleSim && this.SingleSim.id) {
+      this.sim_id = this.SingleSim.id
+    }
   }
 }
-// export default {
-//   data() {
-//     return {
-//       count: 0,
-//       price: 2,
-//       total: 0
-//     }
-//   },
-//   methods: {
-//     increment() {
-//       console.log('run')
-//       this.count = this.count += 1
-//     },
-//     decrement() {
-//       console.log('run')
-//       if (this.count === 0) {
-//         alert('no result')
-//       } else {
-//         this.count = this.count -= 1
-//       }
-//     }
-//   }
-// }
 </script>
 
 <style scoped>

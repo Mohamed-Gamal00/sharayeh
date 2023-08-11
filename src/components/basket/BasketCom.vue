@@ -20,9 +20,10 @@
         </div>
       </div>
       <div class="container mt-5">
-        <div class="row d-flex align-items-center">
+        <div class="row d-flex align-items-center" v-if="sims.length > 0">
           <div class="col-md-6 col-lg-9 p-0">
-            <div v-if="products.length > 0" class="table-responsive p-2">
+            <!-- <div v-if="products.length > 0" class="table-responsive p-2"> -->
+            <div class="table-responsive p-2" style="height: 350px">
               <table class="table bdr mb-0">
                 <thead class="table-dark">
                   <tr class="text-center">
@@ -41,58 +42,56 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="text-center" v-for="product in products" :key="product.id">
+                  <tr class="text-center" v-for="sim in sims" :key="sim.id">
                     <td>
                       <div>
-                        <button
+                        <!-- <button
                           @click="deleteItem(product.id)"
                           type="button"
                           class="btn ms-2 me-1"
                           aria-label="Close"
-                        >
+                        > -->
+                        <button type="button" class="btn ms-2 me-1" aria-label="Close">
                           <FontAwesome
                             class="btnClose text-danger"
                             :icon="['far', 'rectangle-xmark']"
                           />
                         </button>
-                        <img
+                        <!-- <img
                           width="50"
                           height="50"
                           :src="product.image"
                           :alt="product.name"
+                          style="object-fit: cover"
+                        /> -->
+                        <img
+                          width="50"
+                          height="50"
+                          src="@/assets/images/almona.png"
+                          alt="productname"
                           style="object-fit: cover"
                         />
                       </div>
                     </td>
                     <td>
                       <div style="margin: 13px auto !important">
-                        <span>995841031551055</span>
+                        <span>{{ sim.title }}</span>
                       </div>
                     </td>
                     <td>
                       <div style="margin: 13px auto !important">
-                        <span>شهر</span>
+                        <span>{{ sim.period }}</span>
                       </div>
                     </td>
                     <td>
                       <div style="margin: 13px auto !important">
-                        <span>{{ product.price }} ر.س</span>
+                        <!-- <span>{{ product.price }} ر.س</span> -->
+                        <span>{{ sim.price }} ر.س</span>
                       </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-            <div v-else class="alert alert-warning text-center mb-0 mx-3" role="alert">
-              <p class="mb-5">السلة فارغة</p>
-
-              <img
-                class="img-fluid"
-                height="240"
-                width="240"
-                src="https://cdn-icons-png.flaticon.com/512/523/523099.png?w=740&t=st=1690205283~exp=1690205883~hmac=0364e1a65f95a45f682f5f7cce3256beaa034c45f17084b52fd6f91fecb63d06"
-                alt="img"
-              />
             </div>
           </div>
           <div
@@ -110,13 +109,13 @@
                 <div class="card-body py-0">
                   <span class="card-title float-end">المبلغ الفرعي</span>
                   <strong>
-                    <span class="card-title float-start">{{ SubPrice }} ر.س</span>
+                    <span class="card-title float-start">{{ sub_total }} ر.س</span>
                   </strong>
                 </div>
                 <div class="card-body py-0">
-                  <span class="card-title float-end"> ضريبة التوصيل ({{ tax }}) </span>
+                  <span class="card-title float-end"> ضريبة التوصيل ({{ shipping }}) </span>
                   <strong>
-                    <span class="card-title float-start">{{ TotalTax }} ر.س</span>
+                    <span class="card-title float-start">{{ shipping }} ر.س</span>
                   </strong>
                 </div>
               </div>
@@ -126,20 +125,76 @@
                 <div class="card-body">
                   <span class="card-title float-end">المبلغ الكلي</span>
                   <strong>
-                    <span class="card-title float-start">{{ TotalPrice }} ر.س</span>
+                    <span class="card-title float-start">{{ total }} ر.س</span>
                   </strong>
                 </div>
               </div>
+              <!-- <button @click="getCartDetails()">cart details</button> -->
               <PersonalInfoComVue />
             </div>
           </div>
+        </div>
+        <div v-else class="alert alert-warning text-center mb-0 mx-3" role="alert">
+          <p class="mb-5">السلة فارغة</p>
+
+          <img
+            class="img-fluid"
+            height="240"
+            width="240"
+            src="https://cdn-icons-png.flaticon.com/512/523/523099.png?w=740&t=st=1690205283~exp=1690205883~hmac=0364e1a65f95a45f682f5f7cce3256beaa034c45f17084b52fd6f91fecb63d06"
+            alt="img"
+          />
         </div>
       </div>
     </section>
   </div>
 </template>
 
-<script setup>
+<script>
+import axios from 'axios'
+import PersonalInfoComVue from './payment/PersonalInfoCom.vue'
+export default {
+  name: 'BasketCom',
+  components: { PersonalInfoComVue },
+  data() {
+    return {
+      sims: {},
+      shipping: '',
+      sub_total: '',
+      total: ''
+    }
+  },
+  mounted() {
+    this.getCartDetails()
+  },
+  methods: {
+    getCartDetails() {
+      let token = localStorage.getItem('token')
+      axios
+        .post(`/cart-details`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+        .then((res) => {
+          {
+            // console.log(res.data)
+            this.sims = res.data.sims.map((sim) => sim.data)
+            this.shipping = res.data.shipping
+            this.sub_total = res.data.sub_total
+            this.total = res.data.total
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+          alert(err)
+        })
+    }
+  }
+}
+</script>
+
+<!-- <script setup>
 import PersonalInfoComVue from './payment/PersonalInfoCom.vue'
 import axios from 'axios'
 import { ref, onMounted, computed } from 'vue'
@@ -166,7 +221,7 @@ const TotalPrice = computed(() => TotalTax.value + SubPrice.value)
 onMounted(() => {
   fetchproducts()
 })
-</script>
+</script> -->
 <style scoped>
 table {
   width: 100%;
@@ -205,5 +260,25 @@ table button:focus:not(:focus-visible) {
 }
 .shadow {
   box-shadow: 0 0.5rem 1rem rgba(167, 167, 167, 0.2) !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #fff2cd;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9d0a7e;
 }
 </style>

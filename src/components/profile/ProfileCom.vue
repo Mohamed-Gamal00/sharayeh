@@ -125,7 +125,11 @@
                               الشروط والاحكام
                             </router-link>
                           </p>
-                          <button style="width: 100%" class="btn text-danger text-end p-0">
+                          <button
+                            @click="Logout()"
+                            style="width: 100%"
+                            class="btn text-danger text-end p-0"
+                          >
                             <FontAwesome class="" :icon="['fas', 'arrow-right-from-bracket']" />
                             تسجيل الخروج
                           </button>
@@ -152,13 +156,19 @@
 import NavBarCom from '../layout/NavBarCom.vue'
 import FooterCom from '../layout/FooterCom.vue'
 export default {
-  components: { NavBarCom, FooterCom }
+  components: { NavBarCom, FooterCom },
+  methods: {
+    Logout() {
+      localStorage.clear()
+      this.$router.push({ name: 'home' })
+    }
+  }
 }
 </script>
 
 <style scoped>
 a {
-  color: #5D5D5D !important;
+  color: #5d5d5d !important;
   transition: all 0.2s ease-in-out;
 }
 a:hover {

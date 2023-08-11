@@ -28,9 +28,10 @@
                         <div class="modal__dialog">
                           <div class="modal__body">
                             <slot name="body" />
-                            <div class="">
+                            <div>
                               <!-- body -->
                               <div>
+                                <!-- LOGIN -->
                                 <form v-if="phonInput">
                                   <!-- header -->
                                   <div class="d-inline">
@@ -44,9 +45,19 @@
                                   <!-- رقم الهاتف -->
                                   <div class="row g-3 align-items-center justify-content-center">
                                     <div class="col-auto m-3" style="width: 100%">
+                                      <div dir="ltr">
+                                        <!-- <vue-tel-input
+                                          v-model="phone"
+                                          :defaultCountry="'eg'"
+                                          mode="international"
+                                          @input="phone = $event"
+                                          class="form-control"
+                                        ></vue-tel-input> -->
+                                      </div>
                                       <input
                                         dir="rtl"
                                         type="text"
+                                        v-model="number"
                                         class="form-control"
                                         placeholder="رقم الهاتف"
                                       />
@@ -81,6 +92,7 @@
                                   </div>
                                 </form>
 
+                                <!-- OTP -->
                                 <form v-if="OTP">
                                   <!-- header -->
                                   <div class="d-inline">
@@ -91,7 +103,16 @@
                                           هيا لنبدأ
                                         </h5>
                                         <p class="text-center">تم ارسال الكود الي الرقم المسجل</p>
-                                        <p>+522214781000455</p>
+                                        <input
+                                          style="outline: none; border: none"
+                                          type="text"
+                                          v-model="number"
+                                        /><br />
+                                        <input
+                                          style="outline: none; border: none"
+                                          type="text"
+                                          v-model="push_token"
+                                        />
                                       </div>
                                     </h5>
                                     <p class="text-center">رمز التأكيد</p>
@@ -104,12 +125,13 @@
                                         dir="rtl"
                                         class="form-control"
                                         placeholder="تاكيد رقم الهاتف"
+                                        v-model="verification_code"
                                       />
                                     </div>
                                   </div>
                                   <!-- footer -->
                                   <div class="modal__footer text-center">
-                                    <button class="btn" type="button" @click="Login()">
+                                    <button class="btn" type="button" @click="Verify()">
                                       تاكيد
                                     </button>
                                     <button class="btn" type="button" @click="closeModal()">
@@ -136,21 +158,36 @@
 </template>
 
 <script>
+// import { VueTelInput } from 'vue3-tel-input'
+import 'vue3-tel-input/dist/vue3-tel-input.css'
+import axios from 'axios'
+import setAuthHeader from '../../utils/setAuthHeader'
 export default {
-  name: 'DoctorsCom',
+  name: 'LoginCom',
+  // components: { VueTelInput },
+  // setup() {
+  //   const phone = ref('');
+
+  //   return {
+  //     phone,
+  //   };
+  // },
   data() {
     return {
       disabled: false,
       loading: false,
       show: false,
       phonInput: true,
-      OTP: false
+      OTP: false,
+      number: '',
+      verification_code: '',
+      push_token: 'test'
     }
   },
-  /* get */
   methods: {
     closeModal() {
       this.show = false
+      this.number = ''
       document.querySelector('body').classList.remove('overflow-hidden')
     },
     openModal() {
@@ -159,16 +196,65 @@ export default {
       this.OTP = false
       document.querySelector('body').classList.add('overflow-hidden')
     },
+    mounted() {
+      let user = localStorage.getItem('user')
+      if (user) {
+        this.$router.push({ name: 'home' })
+      }
+    },
     async Login() {
-      console.log('add doctor function')
       this.loading = true
       this.disabled = true
-      setTimeout(() => {
-        this.OTP = true
+      console.log('login user')
+      const credentaials = {
+        number: this.number
+      }
+      await axios
+        .post(`/auth`, credentaials)
+        .then((res) => {
+          console.log(res)
+          if (res.data.message == 'code has been sent successfully for login!') {
+            this.OTP = true
+            this.phonInput = false
+            this.loading = false
+            this.disabled = false
+          } else {
+            alert('خطأ اثناء تسجيل الدخول')
+            this.show = false
+            this.loading = false
+            this.disabled = false
+          }
+        })
+        .catch((err) => {
+          alert('Login-Error', err)
+        })
+    },
+    async Verify() {
+      console.log('Verify user')
+      const credentaials = {
+        number: this.number,
+        verification_code: this.verification_code,
+        push_token: this.push_token
+      }
+      await axios.post(`/verify`, credentaials).then((res) => {
+        this.OTP = false
+        this.show = false
         this.phonInput = false
         this.loading = false
         this.disabled = false
-      }, 500)
+        console.log(res)
+        localStorage.setItem('token', res.data.token)
+        // localStorage.setItem('user', JSON.stringify(res.data))
+        setAuthHeader(res.data.token)
+        this.$router.push({ name: 'client-info' })
+      })
+      // .catch((err) => {
+      //   console.log(err.response)
+      //   alert(err.response.data.message)
+      //   // this.$router.push({ name: 'servererror' })
+      // })
+      this.loading = true
+      this.disabled = true
     }
   }
 }
@@ -185,7 +271,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2
+  z-index: 2;
 }
 .modalpopup > div {
   background-color: #fff;

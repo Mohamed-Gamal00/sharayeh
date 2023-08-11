@@ -3,34 +3,18 @@
     <section class="py-5">
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div class="col-md-10">
-            <div class="row justify-content-center text-center my-4">
-              <div>
-                <strong>
-                  <h3 class="fw-900" style="color: #3aa8f5; font-size: 30px">المضافة حديثاً</h3>
-                </strong>
-                <router-link :to="{ name: 'RecentlyAdded' }">
-                  <span class="text-center float-lg-start fw-bold" style="color: #3aa8f5"
-                    >عرض الكل</span
-                  >
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
           <div class="col-md-11">
-            <div class="row justify-content-lg-around text-center">
+            <div class="row justify-content-lg-start text-center">
               <div
-                class="col-md-4 col-lg-3 my-3 my-lg-0 d-flex justify-content-center"
-                v-for="news in News"
+                class="col-md-4 col-lg-3 my-3 my-lg-3 d-flex justify-content-center"
+                v-for="news in sims"
                 :key="news.id"
               >
-                <div class="card rounded-5 add-News">
+                <div class="card rounded-5 add-News py-3" style="width: 100%">
                   <div
                     class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
                   >
-                    <img loading="lazy" :src="news.image" alt="img" />
+                    <img loading="lazy" src="@/assets/images/almona.png" alt="almona" />
                   </div>
                   <div class="card-body">
                     <p class="fs-18 mb-0">
@@ -39,19 +23,23 @@
                     <p class="fs-18">
                       {{ news.number }}
                     </p>
-                    <p class="card-text d-inline ms-4">المدة : {{ news.time }}</p>
-                    <button
-                      style="
-                        width: 125px;
-                        height: 50px;
-                        border-radius: 16px;
-                        background-color: #ffbe0333;
-                        color: #ff9d0a !important;
-                      "
-                      class="btn me-4"
-                    >
-                      أضف للعربة
-                    </button>
+                    <div>
+                      <p class="card-text d-inline fw-bold ms-1" style="font-size: 16px">
+                        المدة : {{ news.period }}
+                      </p>
+                      <button
+                        style="
+                          width: 125px;
+                          height: 50px;
+                          border-radius: 16px;
+                          background-color: #ffbe0333;
+                          color: #ff9d0a !important;
+                        "
+                        class="btn me-2"
+                      >
+                        أضف للعربة
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -64,43 +52,48 @@
 </template>
 
 <script>
-import almona from '@/assets/images/almona.png'
-
+// import almona from '@/assets/images/almona.png'
 export default {
-  data() {
-    return {
-      News: [
-        {
-          id: 1,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 2,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 3,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 4,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        }
-      ]
+  props: {
+    sims: {
+      type: Array
     }
   }
+
+  // data() {
+  //   return {
+  //     News: [
+  //       {
+  //         id: 1,
+  //         title: 'رقم الشريحة',
+  //         image: almona,
+  //         number: '955664400225485',
+  //         time: 'شهر'
+  //       },
+  //       {
+  //         id: 2,
+  //         title: 'رقم الشريحة',
+  //         image: almona,
+  //         number: '955664400225485',
+  //         time: 'شهر'
+  //       },
+  //       {
+  //         id: 3,
+  //         title: 'رقم الشريحة',
+  //         image: almona,
+  //         number: '955664400225485',
+  //         time: 'شهر'
+  //       },
+  //       {
+  //         id: 4,
+  //         title: 'رقم الشريحة',
+  //         image: almona,
+  //         number: '955664400225485',
+  //         time: 'شهر'
+  //       }
+  //     ]
+  //   }
+  // }
 }
 </script>
 

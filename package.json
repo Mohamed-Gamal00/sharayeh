@@ -24,7 +24,7 @@
     "core-js": "^3.8.3",
     "jquery": "^3.6.1",
     "normalize.css": "^8.0.1",
-    "pinia": "^2.0.36",
+    "pinia": "^2.1.6",
     "popper.js": "^1.16.1",
     "swiper": "^8.4.5",
     "v-viewer": "^3.0.11",
@@ -34,7 +34,7 @@
     "vue-snip": "^2.0.0",
     "vue-sweetalert2": "^5.0.5",
     "vue3-autocounter": "^1.0.6",
-    "vuex": "^4.0.2"
+    "vue3-tel-input": "^1.0.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

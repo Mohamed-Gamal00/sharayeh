@@ -14,11 +14,6 @@ const router = createRouter({
       component: () => import('../views/auth/LoginView.vue')
     },
     {
-      path: '/register',
-      name: 'register',
-      component: () => import('../views/auth/RegisterView.vue')
-    },
-    {
       path: '/recently-added',
       name: 'RecentlyAdded',
       component: () => import('../views/recentlyAdded/RecentlyAddedView.vue')
@@ -69,12 +64,12 @@ const router = createRouter({
       component: () => import('../views/basket/BasketView.vue')
     },
     {
-      path: '/sim',
+      path: '/sims',
       name: 'sim',
       component: () => import('../views/sim/SIMcardsView.vue')
     },
     {
-      path: '/sim-info',
+      path: '/sim-info/:simId',
       name: 'sim-info',
       component: () => import('../views/sim/InfoView.vue')
     },

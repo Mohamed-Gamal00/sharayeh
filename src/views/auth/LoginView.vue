@@ -1,5 +1,42 @@
 <template>
   <div>
+    <div class="bg-header" style="direction: rtl">
+      <div class="container-fluid">
+        <div class="row align-items-center m-0 p-0">
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+              <div class="row mt-lg-5 align-items-center justify-content-between">
+                <div class="col-lg-5 fw-bold align-middle text-end text-lg-end">
+                  <h1 class="pb-3 lh-lg" style="color: #1f1e1e">
+                    <strong>
+                      سجل الأن واحصل علي
+                      <span style="color: #3aa8f5">شريحتك</span>
+                    </strong>
+                  </h1>
+                  <p class="pb-3" style="color: #1f1e1e">
+                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
+                    مولد النص العربى
+                  </p>
+                  <!-- <LoginComVue /> -->
+                  <!-- <button
+                  style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
+                  class="btn fw-bold mb-4 border-0 text-dark"
+                >
+                </button> -->
+                </div>
+                <div class="col-lg-6 text-center mt-sm-4 text-lg-start">
+                  <!-- <img loading="lazy"
+                  class="img-fluid rounded-3"
+                  src="../../assets/images/img1.png"
+                  alt="img"
+                /> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="wrapper">
       <main role="main" class="main-content">
         <div class="container-fluid">
@@ -7,15 +44,6 @@
             <div class="col-12">
               <div class="row align-items-center mb-2">
                 <div class="col">
-                  <button
-                    @click="openModal()"
-                    type="button"
-                    class="btn btn-primary"
-                    style="background-color: #7d712a; border: none"
-                  >
-                    تسجيل الدخول
-                    <span><FontAwesome style="color: orange" icon="user-plus" /></span>
-                  </button>
                   <!-- modal login -->
                   <transition name="fade">
                     <div class="modalpopup" v-if="show">
@@ -24,9 +52,10 @@
                         <div class="modal__dialog">
                           <div class="modal__body">
                             <slot name="body" />
-                            <div class="">
+                            <div>
                               <!-- body -->
                               <div>
+                                <!-- LOGIN -->
                                 <form v-if="phonInput">
                                   <!-- header -->
                                   <div class="d-inline">
@@ -40,9 +69,19 @@
                                   <!-- رقم الهاتف -->
                                   <div class="row g-3 align-items-center justify-content-center">
                                     <div class="col-auto m-3" style="width: 100%">
+                                      <div dir="ltr">
+                                        <!-- <vue-tel-input
+                                          v-model="phone"
+                                          :defaultCountry="'eg'"
+                                          mode="international"
+                                          @input="phone = $event"
+                                          class="form-control"
+                                        ></vue-tel-input> -->
+                                      </div>
                                       <input
                                         dir="rtl"
                                         type="text"
+                                        v-model="number"
                                         class="form-control"
                                         placeholder="رقم الهاتف"
                                       />
@@ -77,6 +116,7 @@
                                   </div>
                                 </form>
 
+                                <!-- OTP -->
                                 <form v-if="OTP">
                                   <!-- header -->
                                   <div class="d-inline">
@@ -87,7 +127,16 @@
                                           هيا لنبدأ
                                         </h5>
                                         <p class="text-center">تم ارسال الكود الي الرقم المسجل</p>
-                                        <p>+522214781000455</p>
+                                        <input
+                                          style="outline: none; border: none"
+                                          type="text"
+                                          v-model="number"
+                                        /><br />
+                                        <input
+                                          style="outline: none; border: none"
+                                          type="text"
+                                          v-model="push_token"
+                                        />
                                       </div>
                                     </h5>
                                     <p class="text-center">رمز التأكيد</p>
@@ -100,12 +149,13 @@
                                         dir="rtl"
                                         class="form-control"
                                         placeholder="تاكيد رقم الهاتف"
+                                        v-model="verification_code"
                                       />
                                     </div>
                                   </div>
                                   <!-- footer -->
                                   <div class="modal__footer text-center">
-                                    <button class="btn" type="button" @click="Login()">
+                                    <button class="btn" type="button" @click="Verify()">
                                       تاكيد
                                     </button>
                                     <button class="btn" type="button" @click="closeModal()">
@@ -132,45 +182,129 @@
 </template>
 
 <script>
+// import { VueTelInput } from 'vue3-tel-input'
+import 'vue3-tel-input/dist/vue3-tel-input.css'
+import axios from 'axios'
+import setAuthHeader from '../../utils/setAuthHeader'
 export default {
-  name: 'DoctorsCom',
+  name: 'LoginCom',
+  // components: { VueTelInput },
+  // setup() {
+  //   const phone = ref('');
+
+  //   return {
+  //     phone,
+  //   };
+  // },
   data() {
     return {
       disabled: false,
       loading: false,
-      show: false,
+      show: true,
       phonInput: true,
-      OTP: false
+      OTP: false,
+      number: '',
+      verification_code: '',
+      push_token: 'test'
     }
   },
-  /* get */
   methods: {
     closeModal() {
       this.show = false
+      this.number = ''
       document.querySelector('body').classList.remove('overflow-hidden')
+      this.$router.push({ name: 'home' })
     },
-    openModal() {
-      this.show = true
-      this.phonInput = true
-      this.OTP = false
-      document.querySelector('body').classList.add('overflow-hidden')
-    },
+    // openModal() {
+    //   this.show = true
+    //   this.phonInput = true
+    //   this.OTP = false
+    //   document.querySelector('body').classList.add('overflow-hidden')
+    // },
     async Login() {
-      console.log('add doctor function')
       this.loading = true
       this.disabled = true
-      setTimeout(() => {
-        this.OTP = true
+      console.log('login user')
+      const credentaials = {
+        number: this.number
+      }
+      await axios
+        .post(`/auth`, credentaials)
+        .then((res) => {
+          console.log(res)
+          if (res.data.message == 'code has been sent successfully for login!') {
+            this.OTP = true
+            this.phonInput = false
+            this.loading = false
+            this.disabled = false
+          } else {
+            alert('خطأ اثناء تسجيل الدخول')
+            this.show = false
+            this.loading = false
+            this.disabled = false
+          }
+        })
+        .catch((err) => {
+          alert('Login-Error', err)
+        })
+    },
+    async Verify() {
+      console.log('Verify user')
+      const credentaials = {
+        number: this.number,
+        verification_code: this.verification_code,
+        push_token: this.push_token
+      }
+      await axios.post(`/verify`, credentaials).then((res) => {
+        this.OTP = false
+        this.show = false
         this.phonInput = false
         this.loading = false
         this.disabled = false
-      }, 500)
+        console.log(res)
+        localStorage.setItem('token', res.data.token)
+        // localStorage.setItem('user', JSON.stringify(res.data))
+        setAuthHeader(res.data.token)
+        this.$router.push({ name: 'client-info' })
+      })
+      // .catch((err) => {
+      //   console.log(err.response)
+      //   alert(err.response.data.message)
+      //   // this.$router.push({ name: 'servererror' })
+      // })
+      this.loading = true
+      this.disabled = true
+    }
+  },
+  mounted() {
+    console.log('loginview')
+    let user = localStorage.getItem('token')
+    if (user) {
+      this.$router.push({ name: 'profile' })
     }
   }
 }
 </script>
 
 <style scoped>
+@media only screen and (max-width: 600px) {
+  .bg-header {
+    background-image: url('@/assets/images/header.png');
+    background-position: right; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: initial;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .bg-header {
+    background-image: url('@/assets/images/header.png');
+    background-position: left; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: initial;
+    height: 100vh;
+    overflow-y: 0;
+  }
+}
 .modalpopup {
   position: fixed;
   top: 0;
@@ -181,7 +315,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2 !important;
+  z-index: 2;
 }
 .modalpopup > div {
   background-color: #fff;
