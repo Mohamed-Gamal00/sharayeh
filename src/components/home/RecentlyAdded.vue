@@ -3,14 +3,14 @@
     <section class="py-5">
       <div class="container-fluid">
         <div class="row justify-content-center">
-          <div class="col-md-11">
+          <div class="col-md-10">
             <div class="row justify-content-lg-start text-center">
               <div
                 class="col-md-4 col-lg-3 my-3 my-lg-3 d-flex justify-content-center"
                 v-for="news in sims"
                 :key="news.id"
               >
-                <div class="card rounded-5 add-News py-3" style="width: 100%">
+                <div class="card rounded-5 add-News" style="width: 100%">
                   <div
                     class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
                   >
@@ -23,22 +23,35 @@
                     <p class="fs-18">
                       {{ news.number }}
                     </p>
-                    <div>
-                      <p class="card-text d-inline fw-bold ms-1" style="font-size: 16px">
-                        المدة : {{ news.period }}
-                      </p>
-                      <button
-                        style="
-                          width: 125px;
-                          height: 50px;
-                          border-radius: 16px;
-                          background-color: #ffbe0333;
-                          color: #ff9d0a !important;
-                        "
-                        class="btn me-2"
-                      >
-                        أضف للعربة
-                      </button>
+                    <div class="row d-flex justify-content-around align-items-center">
+                      <div class="col-6 px-0">
+                        <p
+                          class="card-text d-inline fw-900"
+                          style="font-size: 13px; color: #5d5d5d"
+                        >
+                          المدة : {{ news.period }}
+                        </p>
+                      </div>
+                      <div class="col-6">
+                        <router-link
+                          style="cursor: pointer"
+                          :to="{ name: 'sim-info', params: { simId: news.id } }"
+                        >
+                          <button
+                            style="
+                              width: 100%;
+                              height: 50px;
+                              border-radius: 16px;
+                              font-size: 13px;
+                              background-color: #ffbe0333;
+                              color: #ff9d0a !important;
+                            "
+                            class="btn fw-bold"
+                          >
+                            أضف للعربة
+                          </button>
+                        </router-link>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -59,41 +72,6 @@ export default {
       type: Array
     }
   }
-
-  // data() {
-  //   return {
-  //     News: [
-  //       {
-  //         id: 1,
-  //         title: 'رقم الشريحة',
-  //         image: almona,
-  //         number: '955664400225485',
-  //         time: 'شهر'
-  //       },
-  //       {
-  //         id: 2,
-  //         title: 'رقم الشريحة',
-  //         image: almona,
-  //         number: '955664400225485',
-  //         time: 'شهر'
-  //       },
-  //       {
-  //         id: 3,
-  //         title: 'رقم الشريحة',
-  //         image: almona,
-  //         number: '955664400225485',
-  //         time: 'شهر'
-  //       },
-  //       {
-  //         id: 4,
-  //         title: 'رقم الشريحة',
-  //         image: almona,
-  //         number: '955664400225485',
-  //         time: 'شهر'
-  //       }
-  //     ]
-  //   }
-  // }
 }
 </script>
 

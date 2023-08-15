@@ -14,6 +14,13 @@ export default {
     NavBarCom,
     BasketCom,
     FooterCom
+  },
+  async mounted() {
+    let user = localStorage.getItem('token')
+    if (!user) {
+      this.$router.push({ name: 'home' })
+      alert('قم بتسجيل الدخول')
+    }
   }
 }
 </script>

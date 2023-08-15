@@ -4,35 +4,7 @@
       <div class="container-fluid">
         <div class="row align-items-center m-0 p-0">
           <div class="row d-flex justify-content-center">
-            <div class="col-md-10">
-              <div class="row mt-lg-5 align-items-center justify-content-between">
-                <div class="col-lg-5 fw-bold align-middle text-end text-lg-end">
-                  <h1 class="pb-3 lh-lg" style="color: #1f1e1e">
-                    <strong>
-                      سجل الأن واحصل علي
-                      <span style="color: #3aa8f5">شريحتك</span>
-                    </strong>
-                  </h1>
-                  <p class="pb-3" style="color: #1f1e1e">
-                    هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من
-                    مولد النص العربى
-                  </p>
-                  <!-- <LoginComVue /> -->
-                  <!-- <button
-                  style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
-                  class="btn fw-bold mb-4 border-0 text-dark"
-                >
-                </button> -->
-                </div>
-                <div class="col-lg-6 text-center mt-sm-4 text-lg-start">
-                  <!-- <img loading="lazy"
-                  class="img-fluid rounded-3"
-                  src="../../assets/images/img1.png"
-                  alt="img"
-                /> -->
-                </div>
-              </div>
-            </div>
+            <div class="col-md-10"></div>
           </div>
         </div>
       </div>
@@ -201,7 +173,7 @@ export default {
       disabled: false,
       loading: false,
       show: true,
-      phonInput: true,
+      // phonInput: true,
       OTP: false,
       number: '',
       verification_code: '',
@@ -280,7 +252,7 @@ export default {
     console.log('loginview')
     let user = localStorage.getItem('token')
     if (user) {
-      this.$router.push({ name: 'profile' })
+      this.$router.push({ name: 'home' })
     }
   }
 }

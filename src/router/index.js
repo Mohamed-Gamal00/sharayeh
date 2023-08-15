@@ -28,7 +28,8 @@ const router = createRouter({
         {
           path: 'client-info',
           name: 'client-info',
-          component: () => import('../components/profile/PersonalCom.vue')
+          component: () => import('../components/profile/PersonalCom.vue'),
+          props: true // Pass the route parameters as props
         },
         {
           path: 'mysim',
@@ -54,7 +55,7 @@ const router = createRouter({
           path: 'address',
           name: 'address',
           component: () => import('../components/profile/AddressCom.vue')
-        },
+        }
       ]
     },
     /* end children */

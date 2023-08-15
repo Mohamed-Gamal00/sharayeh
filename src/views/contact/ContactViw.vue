@@ -16,4 +16,8 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+* {
+  direction: rtl;
+}
+</style>

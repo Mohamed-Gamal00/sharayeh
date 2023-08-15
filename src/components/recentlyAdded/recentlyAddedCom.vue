@@ -50,18 +50,23 @@
                       <p class="card-text d-inline fw-bold ms-1" style="font-size: 16px">
                         المدة : {{ news.period }}
                       </p>
-                      <button
-                        style="
-                          width: 125px;
-                          height: 50px;
-                          border-radius: 16px;
-                          background-color: #ffbe0333;
-                          color: #ff9d0a !important;
-                        "
-                        class="btn me-2"
+                      <router-link
+                        style="cursor: pointer"
+                        :to="{ name: 'sim-info', params: { simId: news.id } }"
                       >
-                        أضف للعربة
-                      </button>
+                        <button
+                          style="
+                            width: 125px;
+                            height: 50px;
+                            border-radius: 16px;
+                            background-color: #ffbe0333;
+                            color: #ff9d0a !important;
+                          "
+                          class="btn me-2"
+                        >
+                          أضف للعربة
+                        </button>
+                      </router-link>
                     </div>
                   </div>
                 </div>

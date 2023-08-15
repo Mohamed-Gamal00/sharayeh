@@ -24,50 +24,50 @@
           </div>
         </div>
       </div>
-      <div class="row justify-content-center mt-5">
+      <!-- <div class="row justify-content-center mt-5">
         <div class="col-md-11">
           <div class="row justify-content-lg-end text-center">
             <div
-              class="col-md-4 col-lg-3 my-3 my-lg-0 d-flex justify-content-center"
-              v-for="news in sims"
-              :key="news.id"
-            >
-              <div class="card rounded-5 add-News py-3" style="width: 100%">
-                <div
-                  class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
-                >
-                  <img loading="lazy" src="@/assets/images/almona.png" alt="almona" />
-                </div>
-                <div class="card-body">
-                  <p class="fs-18 mb-0">
-                    {{ news.title }}
-                  </p>
-                  <p class="fs-18">
-                    {{ news.number }}
-                  </p>
-                  <div>
-                    <p class="card-text d-inline fw-bold ms-1" style="font-size: 16px">
-                      المدة : {{ news.period }}
+                class="col-md-4 col-lg-3 my-3 my-lg-0 d-flex justify-content-center"
+                v-for="news in sims"
+                :key="news.id"
+              >
+                <div class="card rounded-5 add-News py-3" style="width: 100%">
+                  <div
+                    class="mx-auto rounded-4 mt-3 d-flex align-items-center justify-content-center"
+                  >
+                    <img loading="lazy" src="@/assets/images/almona.png" alt="almona" />
+                  </div>
+                  <div class="card-body">
+                    <p class="fs-18 mb-0">
+                      {{ news.title }}
                     </p>
-                    <button
-                      style="
-                        width: 125px;
-                        height: 50px;
-                        border-radius: 16px;
-                        background-color: #ffbe0333;
-                        color: #ff9d0a !important;
-                      "
-                      class="btn me-2"
-                    >
-                      أضف للعربة
-                    </button>
+                    <p class="fs-18">
+                      {{ news.number }}
+                    </p>
+                    <div>
+                      <p class="card-text d-inline fw-bold ms-1" style="font-size: 16px">
+                        المدة : {{ news.period }}
+                      </p>
+                      <button
+                        style="
+                          width: 125px;
+                          height: 50px;
+                          border-radius: 16px;
+                          background-color: #ffbe0333;
+                          color: #ff9d0a !important;
+                        "
+                        class="btn me-2"
+                      >
+                        أضف للعربة
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
   <RecentlyAdded :sims="AllRecentlyAdd" />
@@ -77,7 +77,6 @@
 <script>
 import NavBarCom from '../../components/layout/NavBarCom.vue'
 import FooterCom from '../../components/layout/FooterCom.vue'
-import almona from '@/assets/images/almona.png'
 import RecentlyAdded from '../../components/home/RecentlyAdded.vue'
 import { simStore } from '../../store/sims'
 import { mapActions, mapState } from 'pinia'
@@ -92,82 +91,6 @@ export default {
   async mounted() {
     await this.getRecentlyAdd()
   },
-  data() {
-    return {
-      News: [
-        {
-          id: 1,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 2,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 3,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 4,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 5,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 6,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 7,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 8,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 9,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        },
-        {
-          id: 10,
-          title: 'رقم الشريحة',
-          image: almona,
-          number: '955664400225485',
-          time: 'شهر'
-        }
-      ]
-    }
-  }
 }
 </script>
 

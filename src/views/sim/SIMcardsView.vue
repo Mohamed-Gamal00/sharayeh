@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <PageLoder />
+  </div>
   <NavBarCom />
   <div
     class="container-fluid"
@@ -17,7 +20,7 @@
       </strong>
     </div>
   </div>
-  <div class="col-10 col-md-11">
+  <div class="container-fluid">
     <div class="row my-4">
       <div>
         <button class="btn">
@@ -46,6 +49,7 @@
 </template>
 
 <script>
+import PageLoder from '../../components/pageloader/PageLoder.vue'
 import NavBarCom from '../../components/layout/NavBarCom.vue'
 import SIMCom from '../../components/sim/SIMcards.vue'
 import FooterCom from '../../components/layout/FooterCom.vue'
@@ -56,22 +60,35 @@ export default {
   components: {
     NavBarCom,
     SIMCom,
-    FooterCom
+    FooterCom,
+    PageLoder
+  },
+  data() {
+    return {
+      loading: false
+    }
   },
   computed: {
-    ...mapState(simStore, ['sixmonths','threeMonths','year','month'])
+    ...mapState(simStore, ['sixmonths', 'threeMonths', 'year', 'month'])
   },
   methods: {
     ...mapActions(simStore, ['getAllSims'])
   },
   async mounted() {
+    this.loading = true
+    let user = localStorage.getItem('token')
+    if (!user) {
+      this.$router.push({ name: 'home' })
+      alert('قم بتسجيل الدخول')
+    }
     await this.getAllSims()
+    this.loading = false
   }
 }
 </script>
 
 <style>
-*{
+* {
   direction: rtl;
 }
 </style>

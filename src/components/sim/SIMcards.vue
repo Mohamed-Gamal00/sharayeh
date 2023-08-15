@@ -15,50 +15,64 @@
                 <Swiper
                   :modules="modules"
                   :pagination="{ el: '.swiper-pagination', clickable: true }"
-                  :slides-per-view="4"
+                  :slides-per-view="1"
                   :space-between="35"
                   :navigation="{ prevIcon: '.swiper-prev', nextIcon: '.swiper-next' }"
                   :autoplay="{ delay: 3000 }"
                   class="pb-9"
+                  :breakpoints="{
+                    '640': {
+                      slidesPerView: 1,
+                      spaceBetween: 20
+                    },
+                    '768': {
+                      slidesPerView: 3,
+                      spaceBetween: 40
+                    },
+                    '1024': {
+                      slidesPerView: 4,
+                      spaceBetween: 50
+                    }
+                  }"
                 >
                   <swiper-slide v-for="sim in sims" :key="sim.id">
                     <div class="card text-center rounded-4">
                       <div class="card-body">
-                        <router-link
-                          style="cursor: pointer"
-                          :to="{ name: 'sim-info', params: { simId: sim.id } }"
-                        >
-                          <div>
-                            <div class="rounded-4 d-flex align-items-center justify-content-center">
-                              <img loading="lazy" src="@/assets/images/almona.png" alt="img" />
-                            </div>
-                            <div class="my-2"></div>
-                            <p class="fs-18 mb-0">
-                              {{ sim.type }}
-                            </p>
-                            <div class="my-2"></div>
-                            <p class="mb-0" style="font-size: 14px">رقم الشريحة</p>
-                            <p class="fs-18" style="font-weight: 900" dir="ltr">
-                              {{ sim.number }}
-                            </p>
+                        <div>
+                          <div class="rounded-4 d-flex align-items-center justify-content-center">
+                            <img loading="lazy" src="@/assets/images/almona.png" alt="img" />
                           </div>
-                        </router-link>
+                          <div class="my-2"></div>
+                          <p class="fs-18 mb-0">
+                            {{ sim.type }}
+                          </p>
+                          <div class="my-2"></div>
+                          <p class="mb-0" style="font-size: 14px">رقم الشريحة</p>
+                          <p class="fs-18" style="font-weight: 900" dir="ltr">
+                            {{ sim.number }}
+                          </p>
+                        </div>
                         <div>
                           <p class="card-text d-inline" style="font-size: 15px; color: #5d5d5d">
                             المدة : {{ sim.period }}
                           </p>
-                          <button
-                            style="
-                              width: 131px;
-                              height: 50px;
-                              border-radius: 16px;
-                              background-color: #ffbe0333;
-                              color: #ff9d0a !important;
-                            "
-                            class="btn me-2"
+                          <router-link
+                            style="cursor: pointer"
+                            :to="{ name: 'sim-info', params: { simId: sim.id } }"
                           >
-                            أضف للعربة
-                          </button>
+                            <button
+                              style="
+                                width: 131px;
+                                height: 50px;
+                                border-radius: 16px;
+                                background-color: #ffbe0333;
+                                color: #ff9d0a !important;
+                              "
+                              class="btn me-2"
+                            >
+                              أضف للعربة
+                            </button>
+                          </router-link>
                         </div>
                       </div>
                     </div>

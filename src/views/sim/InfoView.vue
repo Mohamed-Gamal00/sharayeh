@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <InfoCartLoadingVue />
+  </div>
   <NavBarCom />
   <InfoCom :SingleSim="singleSim" />
   <FooterCom />
@@ -10,23 +13,30 @@ import InfoCom from '../../components/sim/InfoCom.vue'
 import FooterCom from '../../components/layout/FooterCom.vue'
 import { simStore } from '../../store/sims'
 import { mapActions, mapState } from 'pinia'
+import InfoCartLoadingVue from '../../components/pageloader/InfoCartLoading.vue'
 export default {
   name: 'HomeCom',
   components: {
+    InfoCartLoadingVue,
     NavBarCom,
     InfoCom,
     FooterCom
   },
+  data() {
+    return {
+      loading: false
+    }
+  },
   computed: {
-    ...mapState(simStore, ["singleSim"]),
+    ...mapState(simStore, ['singleSim'])
   },
   methods: {
-    ...mapActions(simStore, ["getSimById"]),
+    ...mapActions(simStore, ['getSimById'])
   },
   async mounted() {
-    await this.getSimById(this.$route.params.simId);
-  },
+    this.loading = true
+    await this.getSimById(this.$route.params.simId)
+    this.loading = false
+  }
 }
-
-
 </script>

@@ -56,16 +56,16 @@
                             <img
                               width="100"
                               height="100"
-                              style="border: 2px solid #ff9d0a"
-                              src="../../assets/images/almona.png"
+                              style="border: 2px solid #ff9d0ab0"
+                              src="../../assets/images/profile.png"
                               class="rounded-circle bg-dark"
                               alt="img"
                             />
                           </div>
 
-                          <p class="mb-0">mohamed gamal</p>
+                          <p class="my-2">{{ Profile.name }}</p>
                           <strong>
-                            <p class="mb-0">955664400225485</p>
+                            <p class="my-0">{{ Profile.number }}</p>
                           </strong>
                         </div>
                       </div>
@@ -139,7 +139,7 @@
                   </div>
                   <!-- nested route -->
                   <div class="col-md-7 col-lg-8 mt-4 mt-lg-0 mt-md-0">
-                    <router-view></router-view>
+                    <router-view :profileData="Profile" @update:profileData="updateProfileData"></router-view>
                   </div>
                 </div>
               </div>
@@ -155,13 +155,25 @@
 <script>
 import NavBarCom from '../layout/NavBarCom.vue'
 import FooterCom from '../layout/FooterCom.vue'
+import { profileStore } from '../../store/profile'
+import { mapActions, mapState } from 'pinia'
 export default {
   components: { NavBarCom, FooterCom },
+  computed: {
+    ...mapState(profileStore, ['Profile'])
+  },
   methods: {
     Logout() {
       localStorage.clear()
       this.$router.push({ name: 'home' })
+    },
+    ...mapActions(profileStore, ['getProfile']),
+    updateProfileData() {
+      this.getProfile()
     }
+  },
+  mounted() {
+    this.getProfile()
   }
 }
 </script>

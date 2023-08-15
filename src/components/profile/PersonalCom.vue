@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-mutating-props -->
 <template>
   <div>
     <!-- content -->
@@ -5,7 +6,7 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-12 justify-content-center">
           <div class="row">
-            <form class="form-inline" >
+            <form class="form-inline">
               <div class="row d-flex justify-content-start">
                 <div class="col-md-12 col-lg-8 mt-4 d-flex justify-content-cente mt-lg-4 mb-lg-4">
                   <div class="row">
@@ -19,11 +20,12 @@
                           type="text"
                           class="form-control"
                           id="validationustomUsername"
+                          v-model="name"
                           placeholder="Username"
                           aria-describedby="inputGroupPrepend"
                         />
                         <div class="input-group-prepend me-3">
-                          <button class="btn text-custom" type="button">
+                          <button @click="EditUser()" class="btn text-custom" type="button">
                             <FontAwesome class="" :icon="['far', 'pen-to-square']" />
                           </button>
                         </div>
@@ -39,11 +41,12 @@
                           type="text"
                           class="form-control"
                           id="validationCustomUsername"
+                          v-model="number"
                           placeholder="رقم الهاتف"
                           aria-describedby="inputGroupPrepend"
                         />
                         <div class="input-group-prepend me-3">
-                          <button class="btn text-custom" type="button">
+                          <button @click="EditUser()" class="btn text-custom" type="button">
                             <FontAwesome class="" :icon="['far', 'pen-to-square']" />
                           </button>
                         </div>
@@ -74,6 +77,52 @@
   </div>
 </template>
 
+<script>
+import axios from 'axios'
+export default {
+  props: {
+    profileData: {
+      type: Object
+    }
+  },
+  data() {
+    return {
+      name: this.profileData.name,
+      number: this.profileData.number
+    }
+  },
+  methods: {
+    async EditUser() {
+      console.log('update edit user')
+      let token = localStorage.getItem('token')
+      await axios
+        .post(
+          `/editProfile`,
+          {
+            name: this.name,
+            number: this.number
+          },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          alert(res.data.message)
+          // Use this.$set to update the Profile object
+
+          this.$emit('update:profileData', {
+            ...this.profileData,
+            name: this.number,
+            number: this.number
+          })
+        })
+    }
+  }
+}
+</script>
 <style scoped>
 .form-control {
   border: none;

@@ -52,7 +52,7 @@
                         </li>
                         <li>
                           <p class="card-text fs-16" style="color: #787878">
-                            تواصل معنا الاًن +966 5 65553390
+                            تواصل معنا الاًن <span dir="ltr">+966 5 65553390</span>
                           </p>
                         </li>
                       </ul>
@@ -82,6 +82,7 @@
                           <div class="quantity-field">
                             <button
                               @click="decrement()"
+                              disabled
                               class="value-button decrease-button rounded-0"
                               title="Azalt"
                             >
@@ -89,6 +90,7 @@
                             </button>
                             <input class="number" v-model="qty" />
                             <button
+                              disabled
                               @click="increment()"
                               class="value-button increase-button rounded-0"
                               title="Arrtır"
@@ -107,6 +109,14 @@
                           <p class="mb-0 fw-900">{{ total }} ر.س</p>
                         </div>
                         <div class="col-6 col-md-6 col-lg-8" dir="ltr">
+                          <!-- <button class="btn btn-danger" type="button" disabled>
+                            <span
+                              class="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            Loading...
+                          </button> -->
                           <button
                             class="btn my-3 mx-1 border-0"
                             @click="AddToCart()"
@@ -117,6 +127,12 @@
                               font-size: 18px;
                             "
                           >
+                            <span
+                              v-if="loading"
+                              class="spinner-border spinner-border-sm"
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
                             اضف الي العربة
                           </button>
                         </div>
@@ -156,7 +172,8 @@ export default {
   },
   data() {
     return {
-      qty: ref(0),
+      loading: false,
+      qty: ref(1),
       price: this.SingleSim.price,
       sim_id: '' // Initialize sim_id to null
     }
@@ -179,12 +196,14 @@ export default {
   },
   methods: {
     increment() {
-      console.log('run')
-      this.qty += 1
+      if (this.qty === 1) {
+        alert('no result')
+      } else {
+        this.qty += 1
+      }
     },
     decrement() {
-      console.log('run')
-      if (this.qty === 0) {
+      if (this.qty === 1) {
         alert('no result')
       } else {
         this.qty -= 1
@@ -193,6 +212,7 @@ export default {
     async AddToCart() {
       let token = localStorage.getItem('token')
       console.log('add to cart process')
+      this.loading = true
       await axios
         .post(
           `/add-cart`,
@@ -208,12 +228,20 @@ export default {
         )
         .then((res) => {
           console.log(res)
-          alert('add to card success')
+          if (res.data.status == 0) {
+            alert('this product already added')
+            this.$router.push({ name: 'sim' })
+          } else {
+            alert('this product added success')
+            this.$router.push({ name: 'basket' })
+          }
+          // alert(res.data.message)
         })
         .catch((err) => {
           console.log(err)
-          alert('some thing went wrong')
+          alert(err.message)
         })
+      this.loading = false
       // setTimeout(() => {
       //   this.name = "";
       //   this.number = "";

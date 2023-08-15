@@ -26,6 +26,7 @@ if (localStorage.token) {
 } else {
   setAuthHeader(false);
 }
+
 library.add(fas, far, fab)
 const app = createApp(App)
 .use(createPinia())

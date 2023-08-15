@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <PageLoder />
+  </div>
   <div dir="rtl">
     <section class="pt-4">
       <div
@@ -51,7 +54,12 @@
                           class="btn ms-2 me-1"
                           aria-label="Close"
                         > -->
-                        <button type="button" class="btn ms-2 me-1" aria-label="Close">
+                        <button
+                          type="button"
+                          @click="deleteItem(sim.id)"
+                          class="btn ms-2 me-1"
+                          aria-label="Close"
+                        >
                           <FontAwesome
                             class="btnClose text-danger"
                             :icon="['far', 'rectangle-xmark']"
@@ -151,26 +159,32 @@
 </template>
 
 <script>
+import PageLoder from '../pageloader/PageLoder.vue'
 import axios from 'axios'
 import PersonalInfoComVue from './payment/PersonalInfoCom.vue'
 export default {
   name: 'BasketCom',
-  components: { PersonalInfoComVue },
+  components: { PersonalInfoComVue, PageLoder },
   data() {
     return {
-      sims: {},
+      loading: false,
+      sims: [],
       shipping: '',
       sub_total: '',
-      total: ''
+      total: '',
+      type: 'single',
+      sim_id: ''
     }
   },
-  mounted() {
-    this.getCartDetails()
+  async mounted() {
+    this.loading = true
+    await this.getCartDetails()
+    this.loading = false
   },
   methods: {
-    getCartDetails() {
+    async getCartDetails() {
       let token = localStorage.getItem('token')
-      axios
+      await axios
         .post(`/cart-details`, {
           headers: {
             Authorization: 'Bearer ' + token
@@ -178,7 +192,6 @@ export default {
         })
         .then((res) => {
           {
-            // console.log(res.data)
             this.sims = res.data.sims.map((sim) => sim.data)
             this.shipping = res.data.shipping
             this.sub_total = res.data.sub_total
@@ -187,9 +200,51 @@ export default {
         })
         .catch((err) => {
           console.log(err)
+          // alert(err.response.data.message)
+        })
+    },
+    deleteItem(sim) {
+      let token = localStorage.getItem('token')
+      const simdata = {
+        type: this.type,
+        sim_id: sim
+      }
+
+      axios
+        .post(`/delete-item-cart`, simdata, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+        .then((res) => {
+          console.log(res)
+          alert(res.data.message)
+          const index = this.sims.findIndex((item) => item.id === sim);
+          if (index !== -1) {
+            // Use splice to remove the item from the array
+            this.sims.splice(index, 1)
+          }
+          this.getCartDetails()
+        })
+        .catch((err) => {
           alert(err)
         })
     }
+
+    // deleteItem(sim) {
+    //   const SimId = sim
+    //   console.log(SimId)
+    //   axios
+    //     .post(`/delete-item-cart`, this.type, SimId)
+    //     .then((res) => {
+    //       console.log(res)
+    //       alert('product deleted success')
+    //       this.getCartDetails()
+    //     })
+    //     .catch((err) => {
+    //       alert(err)
+    //     })
+    // }
   }
 }
 </script>
@@ -264,7 +319,8 @@ table button:focus:not(:focus-visible) {
 
 /* width */
 ::-webkit-scrollbar {
-  width: 1px;
+  width: 10px;
+  height: 10px;
 }
 
 /* Track */

@@ -1,7 +1,11 @@
 <template>
   <div class="bg-header" style="direction: rtl">
     <!-- text and image -->
+    <div v-if="loading">
+      <PageLoder />
+    </div>
     <NavBarCom />
+
     <div class="container-fluid">
       <div class="row align-items-center m-0 p-0">
         <div class="row d-flex justify-content-center">
@@ -18,7 +22,15 @@
                   هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد
                   النص العربى
                 </p>
-                <LoginComVue />
+                <!-- <LoginComVue /> -->
+                <button
+                  @click="this.$router.push({ name: 'contact' })"
+                  type="button"
+                  style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
+                  class="btn fw-bold mb-4 border-0 text-dark"
+                >
+                  تواصل معنا
+                </button>
                 <!-- <button
                   style="background-color: #ffbe03; width: 160px; height: 50px; border-radius: 12px"
                   class="btn fw-bold mb-4 border-0 text-dark"
@@ -73,7 +85,7 @@
       </div>
     </div>
     <!-- section 3 المضافة حديثاً -->
-    <div class="container-fluid">
+    <div class="container-fluid" v-if="user">
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="row justify-content-center text-center my-4">
@@ -90,8 +102,8 @@
           </div>
         </div>
       </div>
+      <RecentlyAdded :sims="HomeSims" />
     </div>
-    <RecentlyAdded :sims="HomeSims" />
     <!-- بانر -->
     <section class="pt-5">
       <div class="container-fluid bg-img">
@@ -161,11 +173,12 @@
 </template>
 
 <script>
+import PageLoder from '../components/pageloader/PageLoder.vue'
 import NavBarCom from '../components/layout/NavBarCom.vue'
 import FeaturesCom from '../components/home/FeaturesCom.vue'
 import SubscriptionsCom from '../components/home/SubscriptionsCom.vue'
 import RecentlyAdded from '../components/home/RecentlyAdded.vue'
-import LoginComVue from '../components/auth/LoginCom.vue'
+// import LoginComVue from '../components/auth/LoginCom.vue'
 import FooterCom from '../components/layout/FooterCom.vue'
 import { simStore } from '../store/sims'
 import { mapActions, mapState } from 'pinia'
@@ -177,8 +190,15 @@ export default {
     FeaturesCom,
     SubscriptionsCom,
     RecentlyAdded,
-    LoginComVue,
+    PageLoder,
+    // LoginComVue,
     FooterCom
+  },
+  data() {
+    return {
+      user: null,
+      loading: false
+    }
   },
   computed: {
     ...mapState(simStore, ['HomeSims'])
@@ -187,7 +207,10 @@ export default {
     ...mapActions(simStore, ['getHomeSims'])
   },
   async mounted() {
+    this.loading = true
     await this.getHomeSims()
+    this.user = localStorage.getItem('token')
+    this.loading = false
   }
 }
 </script>

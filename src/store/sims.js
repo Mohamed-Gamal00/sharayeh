@@ -25,7 +25,7 @@ export const simStore = defineStore('simsStore', {
           // console.log('homesims', this.HomeSims)
         })
         .catch((err) => {
-          console.log(err)
+          console.log("getHomeSims",err)
         })
     },
     async getRecentlyAdd() {
@@ -66,12 +66,11 @@ export const simStore = defineStore('simsStore', {
         })
         .catch((err) => {
           console.log(err)
-          alert('قم بتسجيل الدخول اولا', err.response.data.message)
+          // alert('قم بتسجيل الدخول اولا', err.response.data.message)
         })
     },
     async getSimById(simId) {
       let token = localStorage.getItem('token')
-
       await axios
         .get(`/get-sim?sim_id=${simId}`, {
           headers: {
@@ -84,7 +83,7 @@ export const simStore = defineStore('simsStore', {
         })
         .catch((err) => {
           console.log(err)
-          alert('قم بتسجيل الدخول اولا', err.response.data.message)
+          // alert('قم بتسجيل الدخول اولا', err.response.data.message)
         })
     }
   }
