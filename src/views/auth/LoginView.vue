@@ -57,6 +57,7 @@
                                         class="form-control"
                                         placeholder="رقم الهاتف"
                                       />
+                                      <span class="text-danger">{{ ErrorMsg }}</span>
                                     </div>
                                   </div>
                                   <!-- footer -->
@@ -100,12 +101,12 @@
                                         </h5>
                                         <p class="text-center">تم ارسال الكود الي الرقم المسجل</p>
                                         <input
-                                          style="outline: none; border: none"
+                                          style="outline: none; border: none; direction: rtl"
                                           type="text"
                                           v-model="number"
                                         /><br />
                                         <input
-                                          style="outline: none; border: none"
+                                          style="outline: none; border: none; direction: rtl"
                                           type="text"
                                           v-model="push_token"
                                         />
@@ -172,8 +173,9 @@ export default {
     return {
       disabled: false,
       loading: false,
+      ErrorMsg: '',
       show: true,
-      // phonInput: true,
+      phonInput: true,
       OTP: false,
       number: '',
       verification_code: '',
@@ -187,12 +189,6 @@ export default {
       document.querySelector('body').classList.remove('overflow-hidden')
       this.$router.push({ name: 'home' })
     },
-    // openModal() {
-    //   this.show = true
-    //   this.phonInput = true
-    //   this.OTP = false
-    //   document.querySelector('body').classList.add('overflow-hidden')
-    // },
     async Login() {
       this.loading = true
       this.disabled = true
@@ -204,20 +200,34 @@ export default {
         .post(`/auth`, credentaials)
         .then((res) => {
           console.log(res)
-          if (res.data.message == 'code has been sent successfully for login!') {
+          console.log(res.data.message)
+          if (res.status == 200) {
+            alert(res.data.message)
             this.OTP = true
             this.phonInput = false
             this.loading = false
             this.disabled = false
-          } else {
+          } else if (res.status == 401) {
             alert('خطأ اثناء تسجيل الدخول')
+          } else {
+            alert('خطأ غير متوقع أثناء تسجيل الدخول')
             this.show = false
             this.loading = false
             this.disabled = false
           }
         })
         .catch((err) => {
-          alert('Login-Error', err)
+          console.log(err)
+          if (err.response.status == 422) {
+            alert('خطأ اثناء تسجيل الدخول')
+          }
+          this.ErrorMsg = err.response.data.message
+          setTimeout(() => {
+            this.ErrorMsg = ''
+          }, 2000)
+          this.phonInput = true
+          this.loading = false
+          this.disabled = false
         })
     },
     async Verify() {
@@ -237,7 +247,7 @@ export default {
         localStorage.setItem('token', res.data.token)
         // localStorage.setItem('user', JSON.stringify(res.data))
         setAuthHeader(res.data.token)
-        this.$router.push({ name: 'client-info' })
+        this.$router.push({ name: 'insert-data' })
       })
       // .catch((err) => {
       //   console.log(err.response)

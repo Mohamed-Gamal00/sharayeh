@@ -19,37 +19,24 @@
                         <input
                           type="text"
                           class="form-control"
-                          id="validationustomUsername"
                           v-model="name"
+                          id="validationustomUsername"
                           placeholder="Username"
                           aria-describedby="inputGroupPrepend"
                         />
-                        <div class="input-group-prepend me-3">
-                          <button @click="EditUser()" class="btn text-custom" type="button">
-                            <FontAwesome class="" :icon="['far', 'pen-to-square']" />
-                          </button>
-                        </div>
                       </div>
-                    </div>
-                    <!-- phone_Number -->
-                    <div class="col-md-12 mb-3">
-                      <label for="validationCustomUsername" class="mb-2 me-3">رقم الهاتف</label>
-                      <div class="input-group">
-                        <FontAwesome icon="phone" class="icon text-custom" />
-
+                      <span class="text-danger">{{ Error }}</span>
+                      <!-- img -->
+                      <div class="mb-3">
+                        <label for="formFileMultiple" class="form-label"></label>
                         <input
-                          type="text"
                           class="form-control"
-                          id="validationCustomUsername"
-                          v-model="number"
-                          placeholder="رقم الهاتف"
-                          aria-describedby="inputGroupPrepend"
+                          type="file"
+                          ref="file"
+                          @change="selectFile()"
+                          id="formFileMultiple"
+                          multiple
                         />
-                        <div class="input-group-prepend me-3">
-                          <button @click="EditUser()" class="btn text-custom" type="button">
-                            <FontAwesome class="" :icon="['far', 'pen-to-square']" />
-                          </button>
-                        </div>
                       </div>
                     </div>
                     <!-- save -->
@@ -57,11 +44,16 @@
                       <label for="validationCustomUsername" class="me-3"></label>
                       <div class="">
                         <button
-                          type="submit"
-                          style="background-color: #d600001f; width: 100%"
-                          class="btn fw-bold text-danger"
+                          type="button"
+                          @click="insertData()"
+                          style="background-color: #ffcc03; width: 100%"
+                          class="btn fw-bold text-dark"
                         >
-                          حذف حسابي
+
+                          <div v-if="loading" class="spinner-border spinner-border-sm text-black" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                          <span> حفظ </span>
                           <div class="input-group-prepend me-3"></div>
                         </button>
                       </div>
@@ -76,35 +68,37 @@
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios'
 export default {
-  props: {
-    profileData: {
-      type: Object
-    }
-  },
   data() {
     return {
-      name: this.profileData.name,
-      number: this.profileData.number
+      Error: '',
+      name: 'user',
+      image: '',
+      loading: false
     }
   },
   methods: {
-    async EditUser() {
-      console.log('update edit user')
+    selectFile() {
+      this.image = this.$refs.file.files[0]
+    },
+    async insertData() {
+      this.loading = true
+      console.log('insert user data')
       let token = localStorage.getItem('token')
       await axios
         .post(
-          `/editProfile`,
+          `/insertData`,
           {
             name: this.name,
-            number: this.number
+            image: this.image
           },
           {
             headers: {
-              Authorization: 'Bearer ' + token
+              Authorization: 'Bearer ' + token,
+              'Content-Type': 'multipart/form-data',
+              accept: 'Application/json'
             }
           }
         )
@@ -114,10 +108,18 @@ export default {
 
           this.$emit('update:profileData', {
             ...this.profileData,
-            name: this.name,
-            number: this.number
+            name: this.name
           })
         })
+        .catch((err) => {
+          console.log(err)
+          alert(err.response.data.message)
+          this.Error = err.response.data.message
+          setTimeout(() => {
+            this.Error = ''
+          }, 3000)
+        })
+      this.loading = false
     }
   }
 }

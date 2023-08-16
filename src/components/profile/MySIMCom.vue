@@ -16,6 +16,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          v-model="MySims.sub_date"
                           id="validationustomUsername"
                           placeholder="30 / 7/ 2023"
                           aria-describedby="inputGroupPrepend"
@@ -29,6 +30,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          v-model="MySims.end_date"
                           id="enddate"
                           placeholder="30 / 7/ 2023"
                           aria-describedby="inputGroupPrepend"
@@ -41,6 +43,7 @@
                       <div class="input-group">
                         <input
                           type="text"
+                          v-model="MySims.end_date"
                           class="form-control"
                           id="validationCustomUsernam"
                           placeholder="30 / 7/ 2023"
@@ -56,6 +59,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          v-model="MySims.serial"
                           id="validationCustomUsernum"
                           placeholder="2484512225554546464646"
                           aria-describedby="inputGroupPrepend"
@@ -70,6 +74,7 @@
                           type="text"
                           class="form-control"
                           id="validationCustomUserage"
+                          v-model="MySims.period"
                           placeholder="اشتراك شهري"
                           aria-describedby="inputGroupPrepend"
                         />
@@ -84,6 +89,7 @@
                         <input
                           type="text"
                           class="form-control"
+                          v-model="MySims.price"
                           id="validationCustomUsertotal"
                           placeholder="250 ر.س"
                           aria-describedby="inputGroupPrepend"
@@ -114,7 +120,24 @@
     </div>
   </div>
 </template>
-
+<script>
+import { profileStore } from '../../store/profile'
+import { mapActions, mapState } from 'pinia'
+export default {
+  computed: {
+    ...mapState(profileStore, ['MySims'])
+  },
+  methods: {
+    ...mapActions(profileStore, ['getMySims'])
+    // updateProfileData() {
+    //   this.getMySims()
+    // }
+  },
+  mounted() {
+    this.getMySims()
+  }
+}
+</script>
 <style scoped>
 .form-control {
   border: none;

@@ -19,6 +19,13 @@
               شريحتي
             </h2>
             <h2
+              v-if="$route.path === '/profile/insert-data'"
+              class="fw-900"
+              style="font-size: 30px"
+            >
+              أدخل البيانات الشخصية
+            </h2>
+            <h2
               v-if="$route.path === '/profile/client-info'"
               class="fw-900"
               style="font-size: 30px"
@@ -56,8 +63,19 @@
                             <img
                               width="100"
                               height="100"
+                              v-if="Profile.image"
                               style="border: 2px solid #ff9d0ab0"
-                              src="../../assets/images/profile.png"
+                              :src="Profile.image"
+                              class="rounded-circle bg-dark"
+                              alt="img"
+                            />
+                          </div>
+                          <div v-if="!Profile.image">
+                            <img
+                              width="100"
+                              height="100"
+                              style="border: 2px solid #ff9d0ab0"
+                              src="@/assets/images/profile.png"
                               class="rounded-circle bg-dark"
                               alt="img"
                             />
@@ -71,6 +89,15 @@
                       </div>
                       <div class="card-body mb-1">
                         <div class="card-body py-0">
+                          <p class="list-group-item mb-1 fw-bold bg-transparent">
+                            <router-link
+                              class="btn_btn_link text-decoration-none"
+                              :to="{ name: 'insert-data' }"
+                            >
+                              <FontAwesome class="" :icon="['far', 'calendar-check']" />
+                              تسجيل البيانات
+                            </router-link>
+                          </p>
                           <p class="list-group-item mb-1 fw-bold bg-transparent">
                             <router-link
                               class="btn_btn_link text-decoration-none"
@@ -139,7 +166,10 @@
                   </div>
                   <!-- nested route -->
                   <div class="col-md-7 col-lg-8 mt-4 mt-lg-0 mt-md-0">
-                    <router-view :profileData="Profile" @update:profileData="updateProfileData"></router-view>
+                    <router-view
+                      :profileData="Profile"
+                      @update:profileData="updateProfileData"
+                    ></router-view>
                   </div>
                 </div>
               </div>

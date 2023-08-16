@@ -42,7 +42,13 @@
                                   <div class="row g-3 align-items-center justify-content-center">
                                     <div class="col-auto m-3" style="width: 100%">
                                       <label class="mb-2" for="name">الاسم</label>
-                                      <input dir="rtl" type="text" id="name" class="form-control" />
+                                      <input
+                                        dir="rtl"
+                                        v-model="name"
+                                        type="text"
+                                        id="name"
+                                        class="form-control"
+                                      />
                                     </div>
                                   </div>
                                   <!-- رقم الهاتف -->
@@ -52,6 +58,7 @@
                                       <input
                                         dir="rtl"
                                         type="text"
+                                        v-model="phone"
                                         id="phone"
                                         class="form-control"
                                         placeholder=""
@@ -65,6 +72,7 @@
                                       <input
                                         dir="rtl"
                                         type="text"
+                                        v-model="address"
                                         id="address"
                                         class="form-control"
                                         placeholder=""
@@ -109,7 +117,6 @@
                                 <form v-if="Pay">
                                   <!-- header -->
                                   <div class="d-inline">
-                                    <!-- header -->
                                     <div class="d-inline">
                                       <h5 class="fw-bold text-center mb-3" style="color: #1176c9">
                                         طرق الدفع
@@ -223,16 +230,20 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'PersonalInfo',
   data() {
     return {
       userType: '',
       disabled: false,
+      name: '',
+      phone: '',
+      address: '',
       loading: false,
       show: false,
-      phonInput: true,
-      Pay: true
+      phonInput: false,
+      Pay: false
     }
   },
   /* get */
@@ -248,19 +259,90 @@ export default {
       document.querySelector('body').classList.add('overflow-hidden')
     },
     async Payment() {
-      console.log('payment run')
       this.loading = true
       this.disabled = true
-      setTimeout(() => {
-        this.Pay = true
-        this.phonInput = false
-        this.loading = false
-        this.disabled = false
-      }, 500)
+      console.log('payment run')
+      let token = localStorage.getItem('token')
+      await axios
+        .post(
+          `/checkout`,
+          {
+            name: this.name,
+            address: this.address,
+            phone: this.phone
+          },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token,
+              accept: 'Application/json'
+            }
+          }
+        )
+        .then((res) => {
+          console.log(res)
+          alert(res.data.message)
+
+          // this.$emit('update:profileData', {
+          //   ...this.profileData,
+          //   name: this.name
+          // })
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      this.loading = false
+      this.disabled = false
+      // this.loading = true
+      // this.disabled = true
+      // setTimeout(() => {
+      //   this.Pay = false
+      //   this.phonInput = false
+      //   ;(this.show = false), (this.loading = false)
+      //   this.disabled = false
+      // }, 500)
     }
+    // async insertData() {
+    //   this.loading = true
+    //   console.log('insert user data')
+    //   let token = localStorage.getItem('token')
+    //   await axios
+    //     .post(
+    //       `/insertData`,
+    //       {
+    //         name: this.name,
+    //         image: this.image
+    //       },
+    //       {
+    //         headers: {
+    //           Authorization: 'Bearer ' + token,
+    //           'Content-Type': 'multipart/form-data',
+    //           accept: 'Application/json'
+    //         }
+    //       }
+    //     )
+    //     .then((res) => {
+    //       console.log(res)
+    //       alert(res.data.message)
+
+    //       this.$emit('update:profileData', {
+    //         ...this.profileData,
+    //         name: this.name
+    //       })
+    //     })
+    //     .catch((err) => {
+    //       console.log(err)
+    //       alert(err.response.data.message)
+    //       this.Error = err.response.data.message
+    //       setTimeout(() => {
+    //         this.Error = ''
+    //       }, 3000)
+    //     })
+    //   this.loading = false
+    // }
   }
 }
 </script>
+
 
 <style scoped>
 .modalpopup {

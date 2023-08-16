@@ -23,8 +23,13 @@ const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: () => import('../views/profile/ProfileView.vue'),
-      redirect: '/profile/client-info',
+      redirect: '/profile/insert-data',
       children: [
+        {
+          path: 'insert-data',
+          name: 'insert-data',
+          component: () => import('../components/profile/InsertDataCom.vue'),
+        },
         {
           path: 'client-info',
           name: 'client-info',
