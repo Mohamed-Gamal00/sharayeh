@@ -1,14 +1,19 @@
 <template>
-  <div class="page-loader" style="direction: ltr;" dir="ltr">
-    <span class="back">
-      <span>L</span>
-      <span>o</span>
-      <span>a</span>
-      <span>d</span>
-      <span>i</span>
-      <span>n</span>
-      <span>g</span>
-    </span>
+  <div class="page-loader" style="direction: ltr" dir="ltr">
+    <div class="spinnerContainer">
+      <div class="spinner"></div>
+      <div class="loader">
+        <p>loading</p>
+        <div class="words">
+          <span class="word">Sims</span>
+          <span class="word">Carts</span>
+          <span class="word">images</span>
+          <span class="word">Sims</span>
+          <span class="word">Carts</span>
+          <span class="word">images</span>
+        </div>
+      </div>
+    </div>
     <br />
   </div>
 </template>
@@ -23,54 +28,113 @@ export default {
 * {
   direction: ltr;
 }
-.back {
-  margin: 1em auto;
-  font-family: 'Roboto';
-}
-.back span {
-  font-size: 3em;
-  color:#f2c640;
-  background: #ffffff;
-  display: table-cell;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.041), 0 5px 0 #cccccc13;
-  padding: 0 14px;
-  line-height: 100px;
-  animation: jumb 1.5s infinite;
-}
-@keyframes jumb {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-30px);
-    box-shadow: 0 15px 0 rgb(242, 198, 64);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-.back span:nth-child(1) {
-  animation-delay: 0s;
-}
-.back span:nth-child(2) {
-  animation-delay: 0.1s;
-}
-.back span:nth-child(3) {
-  animation-delay: 0.2s;
-}
-.back span:nth-child(4) {
-  animation-delay: 0.3s;
-}
-.back span:nth-child(5) {
-  animation-delay: 0.4s;
-}
-.back span:nth-child(6) {
-  animation-delay: 0.5s;
-}
-.back span:nth-child(7) {
-  animation-delay: 0.6s;
-}
 /** BEGIN CSS **/
+.spinnerContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  display: grid;
+  border: 4px solid #0000;
+  border-radius: 50%;
+  border-right-color: #299fff;
+  animation: tri-spinner 1s infinite linear;
+}
+
+.spinner::before,
+.spinner::after {
+  content: '';
+  grid-area: 1/1;
+  margin: 2px;
+  border: inherit;
+  border-radius: 50%;
+  animation: tri-spinner 2s infinite;
+}
+
+.spinner::after {
+  margin: 8px;
+  animation-duration: 3s;
+}
+
+@keyframes tri-spinner {
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.loader {
+  color: #4a4a4a;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 25px;
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 40px;
+  padding: 10px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-radius: 8px;
+}
+
+.words {
+  overflow: hidden;
+}
+
+.word {
+  display: block;
+  height: 100%;
+  padding-left: 6px;
+  color: #299fff;
+  animation: cycle-words 5s infinite;
+}
+
+@keyframes cycle-words {
+  10% {
+    -webkit-transform: translateY(-105%);
+    transform: translateY(-105%);
+  }
+
+  25% {
+    -webkit-transform: translateY(-100%);
+    transform: translateY(-100%);
+  }
+
+  35% {
+    -webkit-transform: translateY(-205%);
+    transform: translateY(-205%);
+  }
+
+  50% {
+    -webkit-transform: translateY(-200%);
+    transform: translateY(-200%);
+  }
+
+  60% {
+    -webkit-transform: translateY(-305%);
+    transform: translateY(-305%);
+  }
+
+  75% {
+    -webkit-transform: translateY(-300%);
+    transform: translateY(-300%);
+  }
+
+  85% {
+    -webkit-transform: translateY(-405%);
+    transform: translateY(-405%);
+  }
+
+  100% {
+    -webkit-transform: translateY(-400%);
+    transform: translateY(-400%);
+  }
+}
+
 .page-loader {
   display: flex;
   justify-content: center;
@@ -80,7 +144,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: #3F485B;
+  background-color: #e8e8e8;
   z-index: 999;
 }
 </style>

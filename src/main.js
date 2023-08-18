@@ -14,9 +14,13 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import VueSweetalert2 from 'vue-sweetalert2'
 import 'sweetalert2/dist/sweetalert2.min.css'
 import VueSnip from 'vue-snip'
+// /* OTP config */
+import VOtpInput from "vue3-otp-input";
+
 // /* tel input config */
-// // import VueTelInput from 'vue3-tel-input'
-// import 'vue3-tel-input/dist/vue3-tel-input.css'
+import VueTelInput from 'vue3-tel-input'
+import 'vue3-tel-input/dist/vue3-tel-input.css'
+/* axios config */
 import axios from 'axios'
 axios.defaults.baseURL = 'https://sim-dash.almona.host/api'
 /* token */
@@ -32,7 +36,8 @@ const app = createApp(App)
 .use(createPinia())
 app.use(VueSweetalert2)
 app.use(VueSnip)
-// app.use(VueTelInput);
+app.component('v-otp-input', VOtpInput)
+app.use(VueTelInput);
 app.use(router)
 app.component('FontAwesome', FontAwesomeIcon)
 app.mount('#app')

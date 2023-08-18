@@ -34,7 +34,9 @@
     "vue-snip": "^2.0.0",
     "vue-sweetalert2": "^5.0.5",
     "vue3-autocounter": "^1.0.6",
-    "vue3-tel-input": "^1.0.4"
+    "vue3-otp-input": "^0.4.1",
+    "vue3-tel-input": "^1.0.4",
+    "maz-ui": "^3.9.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

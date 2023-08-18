@@ -9,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="wrapper">
+    <div class="wrapper login">
       <main role="main" class="main-content">
         <div class="container-fluid">
           <div class="row justify-content-center">
@@ -43,20 +43,43 @@
                                     <div class="col-auto m-3" style="width: 100%">
                                       <div dir="ltr">
                                         <!-- <vue-tel-input
-                                          v-model="phone"
+                                          v-model="number"
                                           :defaultCountry="'eg'"
                                           mode="international"
-                                          @input="phone = $event"
+                                          @input="number = $event"
                                           class="form-control"
                                         ></vue-tel-input> -->
+                                        <MazPhoneNumberInput
+                                          v-model="number"
+                                          show-code-on-list
+                                          :translations="{
+                                            countrySelector: {
+                                              placeholder: '',
+                                              error: 'Choose country',
+                                              searchPlaceholder: 'Search a country'
+                                            },
+                                            phoneInput: {
+                                              placeholder: '',
+                                              example: ''
+                                            }
+                                          }"
+                                          color="info"
+                                          :preferred-countries="['EG', 'SA', 'TR', 'US', 'GB']"
+                                          :ignored-countries="['AC']"
+                                          default-country-code="EG"
+                                          @update="results = $event"
+                                          :success="results?.isValid"
+                                        />
+                                        <!-- <button @click="submitPhoneNumber">Submit</button>
+                                        <p>Results: {{ results }}</p> -->
                                       </div>
-                                      <input
+                                      <!-- <input
                                         dir="rtl"
                                         type="text"
                                         v-model="number"
                                         class="form-control"
                                         placeholder="رقم الهاتف"
-                                      />
+                                      /> -->
                                       <span class="text-danger">{{ ErrorMsg }}</span>
                                     </div>
                                   </div>
@@ -101,29 +124,45 @@
                                         </h5>
                                         <p class="text-center">تم ارسال الكود الي الرقم المسجل</p>
                                         <input
+                                          class="text-center"
                                           style="outline: none; border: none; direction: rtl"
                                           type="text"
                                           v-model="number"
                                         /><br />
-                                        <input
+                                        <!-- <input
                                           style="outline: none; border: none; direction: rtl"
                                           type="text"
                                           v-model="push_token"
-                                        />
+                                        /> -->
                                       </div>
                                     </h5>
-                                    <p class="text-center">رمز التأكيد</p>
+                                    <p class="text-end">رمز التأكيد</p>
                                   </div>
-                                  <!-- رقم الهاتف -->
+                                  <!-- OTP -->
                                   <div class="row g-3 align-items-center justify-content-center">
                                     <div class="col-auto m-3" style="width: 100%">
-                                      <input
+                                      <div class="d-flex justify-content-center">
+                                        <v-otp-input
+                                          ref="otpInput"
+                                          v-model:value="verification_code"
+                                          input-classes="otp-input"
+                                          separator="-"
+                                          :num-inputs="4"
+                                          :should-auto-focus="true"
+                                          input-type="letter-numeric"
+                                          :conditionalClass="['one', 'two', 'three', 'four']"
+                                          :placeholder="['*', '*', '*', '*']"
+                                          @on-change="handleOnChange"
+                                          @on-complete="handleOnComplete"
+                                        />
+                                      </div>
+                                      <!-- <input
                                         type="text"
                                         dir="rtl"
                                         class="form-control"
                                         placeholder="تاكيد رقم الهاتف"
                                         v-model="verification_code"
-                                      />
+                                      /> -->
                                     </div>
                                   </div>
                                   <!-- footer -->
@@ -156,11 +195,32 @@
 
 <script>
 // import { VueTelInput } from 'vue3-tel-input'
-import 'vue3-tel-input/dist/vue3-tel-input.css'
+import 'maz-ui/css/main.css'
+import MazPhoneNumberInput from 'maz-ui/components/MazPhoneNumberInput'
+import { ref } from 'vue'
 import axios from 'axios'
 import setAuthHeader from '../../utils/setAuthHeader'
 export default {
   name: 'LoginCom',
+  components: {
+    MazPhoneNumberInput
+  },
+  setup() {
+    const number = ref('')
+    const results = ref('')
+
+    const submitPhoneNumber = () => {
+      // Process the phoneNumber value and update results
+      // For example:
+      results.value = `Submitted phone number: ${number.value}`
+    }
+
+    return {
+      number,
+      results,
+      submitPhoneNumber
+    }
+  },
   // components: { VueTelInput },
   // setup() {
   //   const phone = ref('');
@@ -177,12 +237,29 @@ export default {
       show: true,
       phonInput: true,
       OTP: false,
-      number: '',
+      // number: '',
       verification_code: '',
+      otpInput: null,
       push_token: 'test'
     }
   },
   methods: {
+    // handleNumberInput(value) {
+    //   console.log('number completed: ', value)
+    // },
+    handleOnComplete(value) {
+      console.log('OTP completed: ', value)
+    },
+    handleOnChange(value) {
+      console.log('OTP changed: ', value)
+    },
+    clearInput() {
+      this.otpInput.clearInput()
+    },
+    fillInput(value) {
+      console.log(value)
+      this.otpInput.fillInput(value)
+    },
     closeModal() {
       this.show = false
       this.number = ''
@@ -237,23 +314,25 @@ export default {
         verification_code: this.verification_code,
         push_token: this.push_token
       }
-      await axios.post(`/verify`, credentaials).then((res) => {
-        this.OTP = false
-        this.show = false
-        this.phonInput = false
-        this.loading = false
-        this.disabled = false
-        console.log(res)
-        localStorage.setItem('token', res.data.token)
-        // localStorage.setItem('user', JSON.stringify(res.data))
-        setAuthHeader(res.data.token)
-        this.$router.push({ name: 'insert-data' })
-      })
-      // .catch((err) => {
-      //   console.log(err.response)
-      //   alert(err.response.data.message)
-      //   // this.$router.push({ name: 'servererror' })
-      // })
+      await axios
+        .post(`/verify`, credentaials)
+        .then((res) => {
+          this.OTP = false
+          this.show = false
+          this.phonInput = false
+          this.loading = false
+          this.disabled = false
+          console.log(res)
+          localStorage.setItem('token', res.data.token)
+          // localStorage.setItem('user', JSON.stringify(res.data))
+          setAuthHeader(res.data.token)
+          this.$router.push({ name: 'insert-data' })
+        })
+        .catch((err) => {
+          console.log(err.response)
+          alert(err.response.data.message)
+          // this.$router.push({ name: 'servererror' })
+        })
       this.loading = true
       this.disabled = true
     }
@@ -268,9 +347,33 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.login .otp-input {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  margin: 0 10px;
+  font-size: 20px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+/* Background colour of an input field with value */
+.login .otp-input.is-complete {
+  background-color: #e4e4e4;
+}
+.login .otp-input::-webkit-inner-spin-button,
+.login .otp-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.login input::placeholder {
+  font-size: 15px;
+  text-align: center;
+  font-weight: 600;
+}
 @media only screen and (max-width: 600px) {
-  .bg-header {
+  .login .bg-header {
     background-image: url('@/assets/images/header.png');
     background-position: right; /* Center the image */
     background-repeat: no-repeat; /* Do not repeat the image */
@@ -287,7 +390,7 @@ export default {
     overflow-y: 0;
   }
 }
-.modalpopup {
+.login .modalpopup {
   position: fixed;
   top: 0;
   left: 0;
@@ -299,24 +402,24 @@ export default {
   align-items: center;
   z-index: 2;
 }
-.modalpopup > div {
+.login .modalpopup > div {
   background-color: #fff;
-  padding: 50px;
+  padding: 50px 8px;
   border-radius: 10px;
 }
-.modalpopup > div .form-control {
+.login .modalpopup > div .form-control {
   color: #000000;
   background-color: #ced4da;
   border-radius: 12px;
 }
-.modalpopup > div .form-control:focus {
+.login .modalpopup > div .form-control:focus {
   background-color: #ced4da;
   border-color: #8a877b00;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(173, 157, 91, 0);
 }
 @media only screen and (min-width: 1200px) {
-  .modalpopup > div {
+  .login .modalpopup > div {
     background-color: #fff;
     padding: 50px;
     border-radius: 10px;
