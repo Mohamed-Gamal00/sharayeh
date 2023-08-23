@@ -3,7 +3,7 @@
     <div class="wrapper">
       <main role="main" class="main-content">
         <div class="container-fluid">
-          <div class="row justify-content-center">
+          <div class="row d-flex justify-content-center">
             <div class="col-12">
               <div class="row align-items-center mb-2">
                 <div class="col">
@@ -279,13 +279,14 @@ export default {
           }
         )
         .then((res) => {
-          console.log(res)
+          console.log(res),
+            setTimeout(() => {
+              this.name = ''
+              this.phone = ''
+              this.address = ''
+            }, 1000)
           alert(res.data.message)
 
-          // this.$emit('update:profileData', {
-          //   ...this.profileData,
-          //   name: this.name
-          // })
         })
         .catch((err) => {
           console.log(err)
@@ -342,7 +343,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 .modalpopup {

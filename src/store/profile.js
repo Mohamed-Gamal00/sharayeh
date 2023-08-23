@@ -3,7 +3,8 @@ import axios from 'axios'
 export const profileStore = defineStore('profileStore', {
   state: () => ({
     Profile: [],
-    MySims: []
+    MySims: [],
+    SiteSetting: []
   }),
   actions: {
     async getProfile() {
@@ -33,9 +34,30 @@ export const profileStore = defineStore('profileStore', {
           }
         })
         .then((res) => {
-          console.log('single sim', res)
+          // console.log('single sim', res)
           this.MySims = res.data.data[0]
-          console.log(this.MySims)
+          // console.log(this.MySims)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
+
+    async siteSetting() {
+      let token = localStorage.getItem('token')
+      await axios
+        .get(`/siteSetting`, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+            accept: 'Application/json'
+          }
+        })
+        .then((res) => {
+          console.log('SiteSetting', res)
+          {
+            this.SiteSetting =  res.data.settings[0]
+            console.log(this.SiteSetting)
+          }
         })
         .catch((err) => {
           console.log(err)

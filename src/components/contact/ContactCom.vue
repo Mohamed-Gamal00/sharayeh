@@ -27,33 +27,34 @@
 
                               <input
                                 type="text"
-                                placeholder="الاسم"
+                                placeholder="الاسم الاول"
                                 class="form-control"
-                                v-model="contact.name"
+                                v-model="contact.f_name"
                               />
-                              <span class="erroe-feedbak" v-if="v$.contact.name.$error">{{
-                                v$.contact.name.$errors[0].$message
+                              <span class="erroe-feedbak" v-if="v$.contact.f_name.$error">{{
+                                v$.contact.f_name.$errors[0].$message
                               }}</span>
                             </div>
                           </div>
                         </div>
-                        <!-- رقم الهاتف -->
+                        <!-- l_name -->
                         <div class="col-md-6">
                           <div class="d-flex flex-row align-items-center">
                             <div class="form-outline flex-fill mb-0">
-                              <FontAwesome icon="phone" class="icon" />
+                              <FontAwesome icon="envelope-open-text" class="icon" />
                               <input
-                                type="number"
-                                placeholder="رقم الجوال"
+                                type="text"
+                                placeholder="الاسم الثاني"
                                 class="form-control"
-                                v-model="contact.number"
+                                v-model="contact.l_name"
                               />
-                              <span class="erroe-feedbak" v-if="v$.contact.number.$error">{{
-                                v$.contact.number.$errors[0].$message
+                              <span class="erroe-feedbak" v-if="v$.contact.l_name.$error">{{
+                                v$.contact.l_name.$errors[0].$message
                               }}</span>
                             </div>
                           </div>
                         </div>
+
                         <!-- البريد الالكتروني -->
                         <div class="col-md-6">
                           <div class="d-flex flex-row align-items-center">
@@ -71,19 +72,19 @@
                             </div>
                           </div>
                         </div>
-                        <!-- الموضوع -->
+                        <!-- رقم الهاتف -->
                         <div class="col-md-6">
                           <div class="d-flex flex-row align-items-center">
                             <div class="form-outline flex-fill mb-0">
-                              <FontAwesome icon="envelope-open-text" class="icon" />
+                              <FontAwesome icon="phone" class="icon" />
                               <input
-                                type="text"
-                                placeholder="الموضوع"
+                                type="number"
+                                placeholder="رقم الجوال"
                                 class="form-control"
-                                v-model="contact.subject"
+                                v-model="contact.number"
                               />
-                              <span class="erroe-feedbak" v-if="v$.contact.subject.$error">{{
-                                v$.contact.subject.$errors[0].$message
+                              <span class="erroe-feedbak" v-if="v$.contact.number.$error">{{
+                                v$.contact.number.$errors[0].$message
                               }}</span>
                             </div>
                           </div>
@@ -183,10 +184,10 @@ export default {
       loading: false,
       v$: useValidate(),
       contact: {
-        name: '',
+        f_name: '',
+        l_name: '',
         email: '',
         number: '',
-        subject: '',
         message: ''
       }
     }
@@ -194,10 +195,10 @@ export default {
   validations() {
     return {
       contact: {
-        name: { required },
+        f_name: { required },
         email: { required, email },
         number: { required },
-        subject: { required },
+        l_name: { required },
         message: { required }
       }
     }
@@ -208,7 +209,7 @@ export default {
       this.v$.$validate()
       if (!this.v$.$error) {
         await axios
-          .post(`https://admin.almonaoffice.sa.almona.host/api/contact`, this.contact)
+          .post(`/contact_us`, this.contact)
           .then((res) => {
             if (res.data.success == true) {
               this.$swal.fire({
@@ -219,14 +220,14 @@ export default {
                 timer: 2000
               })
               setTimeout(() => {
-                this.contact.name = ''
+                this.contact.f_name = ''
                 this.contact.number = ''
                 this.contact.email = ''
-                this.contact.subject = ''
+                this.contact.l_name = ''
                 this.contact.message = ''
-                ;(this.v$.contact.name.$errors[0].$message = ''),
+                ;(this.v$.contact.f_name.$errors[0].$message = ''),
                   (this.v$.contact.number.$errors[0].$message = ''),
-                  (this.v$.contact.subject.$errors[0].$message = ''),
+                  (this.v$.contact.l_name.$errors[0].$message = ''),
                   (this.v$.contact.email.$errors[0].$message = ''),
                   (this.v$.contact.message.$errors[0].$message = '')
               }, 2000)

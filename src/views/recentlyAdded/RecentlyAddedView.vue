@@ -89,13 +89,18 @@ export default {
     ...mapActions(simStore, ['getRecentlyAdd'])
   },
   async mounted() {
+    let user = localStorage.getItem('token')
+    if (!user) {
+      this.$router.push({ name: 'home' })
+      alert('قم بتسجيل الدخول')
+    }
     await this.getRecentlyAdd()
-  },
+  }
 }
 </script>
 
-<style scoped>
+<!-- <style scoped>
 * {
   direction: rtl;
 }
-</style>
+</style> -->

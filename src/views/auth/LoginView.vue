@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-header" style="direction: rtl">
+    <div class="bg-header">
       <div class="container-fluid">
         <div class="row align-items-center m-0 p-0">
           <div class="row d-flex justify-content-center">
@@ -324,7 +324,6 @@ export default {
           this.disabled = false
           console.log(res)
           localStorage.setItem('token', res.data.token)
-          // localStorage.setItem('user', JSON.stringify(res.data))
           setAuthHeader(res.data.token)
           this.$router.push({ name: 'insert-data' })
         })
@@ -425,5 +424,11 @@ export default {
     border-radius: 10px;
     width: 34%;
   }
+}
+.m-phone-number-input__select[data-v-b43ec161] {
+    width: 7rem !important;
+}
+.m-phone-number-input:not(.--no-flags) .m-phone-number-input__select[data-v-b43ec161] .m-input-wrapper .m-select-input {
+    padding-left: 2.4rem!important;
 }
 </style>

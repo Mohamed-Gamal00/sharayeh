@@ -82,7 +82,7 @@
                       </div>
                     </td>
                     <td>
-                      <div style="margin: 13px auto !important">
+                      <div style="margin: 13px auto !important; direction: ltr">
                         <span>{{ sim.title }}</span>
                       </div>
                     </td>
@@ -204,33 +204,100 @@ export default {
         })
     },
     deleteItem(sim) {
-      let token = localStorage.getItem('token')
-      const simdata = {
-        type: this.type,
-        sim_id: sim
-      }
+      this.$swal
+        .fire({
+          title: 'هل انت متاكد من حذف هذا العنصر',
+          text: 'لن تتمكن من الرجوع مجددا!',
+          icon: 'warning',
+          showCancelButton: true,
+          cancelButtonColor: '#35a2f0',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'حذف',
+          cancelButtonText: 'الغاء'
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            let token = localStorage.getItem('token')
+            const simdata = {
+              type: this.type,
+              sim_id: sim
+            }
 
-      axios
-        .post(`/delete-item-cart`, simdata, {
-          headers: {
-            Authorization: 'Bearer ' + token
+            axios
+              .post(`/delete-item-cart`, simdata, {
+                headers: {
+                  Authorization: 'Bearer ' + token
+                }
+              })
+              .then((res) => {
+                console.log(res)
+                alert(res.data.message)
+                this.$swal.fire({
+                  toast: true,
+                  icon: 'success',
+                  title: 'تم حذف العنصر ',
+                  animation: false,
+                  position: 'top-right',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                  }
+                })
+                const index = this.sims.findIndex((item) => item.id === sim)
+                if (index !== -1) {
+                  // Use splice to remove the item from the array
+                  this.sims.splice(index, 1)
+                }
+                this.getCartDetails()
+              })
+              .catch((err) => {
+                alert(err)
+              })
           }
-        })
-        .then((res) => {
-          console.log(res)
-          alert(res.data.message)
-          const index = this.sims.findIndex((item) => item.id === sim);
-          if (index !== -1) {
-            // Use splice to remove the item from the array
-            this.sims.splice(index, 1)
-          }
-          this.getCartDetails()
-        })
-        .catch((err) => {
-          alert(err)
         })
     }
-
+    // async DeleteDoctor(id) {
+    //   this.$swal
+    //     .fire({
+    //       title: "هل انت متاكد من حذف هذا العنصر",
+    //       text: "لن تتمكن من الرجوع مجددا!",
+    //       icon: "warning",
+    //       showCancelButton: true,
+    //       confirmButtonColor: "#322a7d",
+    //       cancelButtonColor: "#d33",
+    //       confirmButtonText: "حذف",
+    //       cancelButtonText: "الغاء",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         let token = localStorage.getItem("token");
+    //         console.log("delete doctor");
+    //         axios
+    //           .post(`https://lab.almona.host/api/del_doctor/${id}`, {
+    //             headers: {
+    //               Authorization: "Bearer " + token,
+    //             },
+    //           })
+    //           .then((response) => {
+    //             console.log(response);
+    //             if (response.data.success == true) {
+    //               console.log("success");
+    //               this.$swal.fire("حذف!", "تم حذف العنصر بنجاح.", "success");
+    //             } else {
+    //               console.log("delete faild");
+    //               this.$swal.fire("فشل الحذف!", "فشل حذف العنصر.", "error");
+    //             }
+    //             this.loaddoctors();
+    //           })
+    //           .catch((err) => {
+    //             console.log(err);
+    //           });
+    //       }
+    //     });
+    // },
     // deleteItem(sim) {
     //   const SimId = sim
     //   console.log(SimId)

@@ -94,7 +94,7 @@ const router = createRouter({
       name: 'errorpage',
       component: () => import(/* webpackChunkName: "errorpage" */ '../views/ErrorView.vue')
     }
-  ]
+  ],
 })
 
 export default router

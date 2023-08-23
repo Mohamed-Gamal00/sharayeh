@@ -83,7 +83,7 @@
 
                           <p class="my-2">{{ Profile.name }}</p>
                           <strong>
-                            <p class="my-0">{{ Profile.number }}</p>
+                            <p class="my-0" dir="ltr">{{ Profile.number }}</p>
                           </strong>
                         </div>
                       </div>
@@ -155,7 +155,7 @@
                           <button
                             @click="Logout()"
                             style="width: 100%"
-                            class="btn text-danger text-end p-0"
+                            class="btn text-danger text-end border-0"
                           >
                             <FontAwesome class="" :icon="['fas', 'arrow-right-from-bracket']" />
                             تسجيل الخروج
@@ -165,7 +165,7 @@
                     </div>
                   </div>
                   <!-- nested route -->
-                  <div class="col-md-7 col-lg-8 mt-4 mt-lg-0 mt-md-0">
+                  <div class="col-md-7 col-lg-8 mt-4 mt-lg-0 mt-md-0 align-self-center">
                     <router-view
                       :profileData="Profile"
                       @update:profileData="updateProfileData"

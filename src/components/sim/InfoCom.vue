@@ -240,6 +240,9 @@ export default {
         .catch((err) => {
           console.log(err)
           alert(err.message)
+          if(err.response.status==500){
+            alert("server error")
+          }
         })
       this.loading = false
       // setTimeout(() => {

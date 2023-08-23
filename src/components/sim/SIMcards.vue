@@ -43,23 +43,34 @@
                             <img loading="lazy" src="@/assets/images/almona.png" alt="img" />
                           </div>
                           <div class="my-2"></div>
+                          <div>
+                            <span
+                              v-if="sim.status == 'available'"
+                              class="badge text-bg-success mx-1"
+                              >Available</span
+                            >
+                            <span
+                              v-if="sim.status == 'unavailable'"
+                              class="badge text-bg-danger mx-1"
+                              >Unavailable</span
+                            >
+                          </div>
+                          <div class="my-2"></div>
                           <p class="fs-18 mb-0">
                             {{ sim.type }}
                           </p>
                           <div class="my-2"></div>
                           <p class="mb-0" style="font-size: 14px">رقم الشريحة</p>
-                          <p class="fs-18" style="font-weight: 900" dir="ltr">
+                          <p class="fs-18" style="font-weight: 900; direction: ltr">
                             {{ sim.number }}
                           </p>
                         </div>
+                        <div class="mb-2"></div>
                         <div>
                           <p class="card-text d-inline" style="font-size: 15px; color: #5d5d5d">
                             المدة : {{ sim.period }}
                           </p>
-                          <router-link
-                            style="cursor: pointer"
-                            :to="{ name: 'sim-info', params: { simId: sim.id } }"
-                          >
+                          <router-link :to="{ name: 'sim-info', params: { simId: sim.id } }">
                             <button
                               style="
                                 width: 131px;

@@ -6,10 +6,10 @@
         <p>loading</p>
         <div class="words">
           <span class="word">Sims</span>
-          <span class="word">Carts</span>
+          <span class="word">Cart</span>
           <span class="word">images</span>
           <span class="word">Sims</span>
-          <span class="word">Carts</span>
+          <span class="word">Cart</span>
           <span class="word">images</span>
         </div>
       </div>

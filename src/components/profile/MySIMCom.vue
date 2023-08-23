@@ -1,11 +1,17 @@
 <template>
   <div>
+    <div v-if="loading">
+      <PageLoder />
+    </div>
     <!-- content -->
     <div class="container">
       <div class="row d-flex justify-content-center">
         <div class="col-md-12 justify-content-center">
           <div class="row">
-            <form class="form-inline" id="form">
+            <div v-if="!MySims" class="alert alert-primary text-center" role="alert">
+              لا توجد بايانات ل عرضها
+            </div>
+            <form v-if="MySims" class="form-inline" id="form">
               <div class="row d-flex justify-content-start">
                 <div class="col-md-12 col-lg-8 mt-4 d-flex justify-content-cente mt-lg-4 mb-lg-4">
                   <div class="row">
@@ -97,7 +103,7 @@
                       </div>
                     </div>
                     <!-- save -->
-                    <div class="col-md-12 mb-3">
+                    <!-- <div class="col-md-12 mb-3">
                       <span class="me-3"></span>
                       <div class="">
                         <button
@@ -109,7 +115,7 @@
                           <div class="input-group-prepend me-3"></div>
                         </button>
                       </div>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -121,9 +127,19 @@
   </div>
 </template>
 <script>
+import PageLoder from '../pageloader/PageLoder.vue'
 import { profileStore } from '../../store/profile'
 import { mapActions, mapState } from 'pinia'
+
 export default {
+  components: {
+    PageLoder
+  },
+  data() {
+    return {
+      loading: false
+    }
+  },
   computed: {
     ...mapState(profileStore, ['MySims'])
   },
@@ -133,8 +149,10 @@ export default {
     //   this.getMySims()
     // }
   },
-  mounted() {
+  async mounted() {
+    this.loading = true
     this.getMySims()
+    this.loading = false
   }
 }
 </script>

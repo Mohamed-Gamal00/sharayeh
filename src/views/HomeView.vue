@@ -1,9 +1,9 @@
 <template>
+  <div v-if="loading">
+    <PageLoder />
+  </div>
   <div class="bg-header" style="direction: rtl">
     <!-- text and image -->
-    <div v-if="loading">
-      <PageLoder />
-    </div>
     <NavBarCom />
 
     <div class="container-fluid">
@@ -85,7 +85,7 @@
       </div>
     </div>
     <!-- section 3 المضافة حديثاً -->
-    <div class="container-fluid" v-if="user">
+    <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-md-10">
           <div class="row justify-content-center text-center my-4">
@@ -119,12 +119,24 @@
                 </p>
                 <div class="text-center text-lg-end">
                   <!-- Google Play button -->
-                  <a class="market-btn google-btn" href="#" role="button">
+
+                  <a
+                    class="market-btn google-btn"
+                    :href="SiteSetting.google_play"
+                    target="_blank"
+                    role="button"
+                  >
                     <span class="market-button-subtitle fs-10">GET IT ON</span>
                     <span class="market-button-title">Google Play</span>
                   </a>
                   <!-- App Store button -->
-                  <a class="market-btn apple-btn" href="#" role="button" style="width: 160.72px">
+                  <a
+                    class="market-btn apple-btn"
+                    target="_blank"
+                    :href="SiteSetting.app_store"
+                    role="button"
+                    style="width: 160.72px"
+                  >
                     <span class="market-button-subtitle fs-10">Download on the</span>
                     <span class="market-button-title">App Store</span>
                   </a>
@@ -149,19 +161,26 @@
             <div class="row align-items-center justify-content-between mb-2">
               <div class="text-center">
                 <h3>كيف يمكننا مساعدتك ؟</h3>
-                <button
-                  class="btn my-3 whatsbtn text-dark"
-                  style="background-color: #e2e2e2; border-radius: 12px; font-size: 18px"
+                <a
+                  class="btnn btn-outline-light btn-social"
+                  target="_blank"
+                  aria-label="whatsapp"
+                  :href="SiteSetting.whatsapp"
                 >
-                  <img
-                    loading="lazy"
-                    width="50"
-                    height="50"
-                    src="@/assets/images/whatsapp.png"
-                    alt="whatsapp"
-                  />
-                  للطلب عبر الواتساب
-                </button>
+                  <button
+                    class="btn my-3 whatsbtn text-dark"
+                    style="background-color: #e2e2e2; border-radius: 12px; font-size: 18px"
+                  >
+                    <img
+                      loading="lazy"
+                      width="50"
+                      height="50"
+                      src="@/assets/images/whatsapp.png"
+                      alt="whatsapp"
+                    />
+                    للطلب عبر الواتساب
+                  </button>
+                </a>
               </div>
             </div>
           </div>
@@ -173,6 +192,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import PageLoder from '../components/pageloader/PageLoder.vue'
 import NavBarCom from '../components/layout/NavBarCom.vue'
 import FeaturesCom from '../components/home/FeaturesCom.vue'
@@ -197,18 +217,40 @@ export default {
   data() {
     return {
       user: null,
-      loading: false
+      loading: false,
+      SiteSetting: []
     }
   },
   computed: {
     ...mapState(simStore, ['HomeSims'])
   },
   methods: {
-    ...mapActions(simStore, ['getHomeSims'])
+    ...mapActions(simStore, ['getHomeSims']),
+    async sitesetting() {
+      let token = localStorage.getItem('token')
+      await axios
+        .get(`/siteSetting`, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+            accept: 'Application/json'
+          }
+        })
+        .then((res) => {
+          console.log('HomeSiteSetting', res)
+          {
+            this.SiteSetting = res.data.settings[0]
+            console.log(this.SiteSetting)
+          }
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   },
   async mounted() {
     this.loading = true
     await this.getHomeSims()
+    await this.sitesetting()
     this.user = localStorage.getItem('token')
     this.loading = false
   }

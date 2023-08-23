@@ -34,6 +34,11 @@ export default {
     ...mapActions(simStore, ['getSimById'])
   },
   async mounted() {
+    let user = localStorage.getItem('token')
+    if (!user) {
+      this.$router.push({ name: 'home' })
+      alert('قم بتسجيل الدخول')
+    }
     this.loading = true
     await this.getSimById(this.$route.params.simId)
     this.loading = false

@@ -34,6 +34,7 @@
                       </div>
                       <div class="col-6">
                         <router-link
+                          disabled
                           style="cursor: pointer"
                           :to="{ name: 'sim-info', params: { simId: news.id } }"
                         >
@@ -67,10 +68,18 @@
 <script>
 // import almona from '@/assets/images/almona.png'
 export default {
+  data() {
+    return {
+      user: ''
+    }
+  },
   props: {
     sims: {
       type: Array
     }
+  },
+  async mounted() {
+    this.user = localStorage.getItem('token')
   }
 }
 </script>

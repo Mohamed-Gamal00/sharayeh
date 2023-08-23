@@ -2,9 +2,9 @@
   <div v-if="loading">
     <PageLoder />
   </div>
-  <NavBarCom />
+  <NavBarCom class="mb-5" />
   <div
-    class="container-fluid"
+    class="container-fluid mt-4"
     style="
       background-image: linear-gradient(
         to right,
@@ -21,8 +21,8 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="row my-4">
-      <div>
+    <div class="row d-flex justify-content-center my-4">
+      <div class="text-end">
         <button class="btn">
           <img width="125" height="84" src="../../assets/images/Mobily.png" alt="mobily" /></button
         >&nbsp;&nbsp;&nbsp;
@@ -44,7 +44,7 @@
   <SIMCom :sims="month" title="شهر" />
   <SIMCom :sims="threeMonths" title="3 شهور" />
   <SIMCom :sims="sixmonths" title="6 شهور" />
-  <SIMCom :sims="year" title="سنة" />
+  <SIMCom :sims="year" v-if="year.length > 0" :title="year[0].period ? 'سنة' : ''" />
   <FooterCom />
 </template>
 
@@ -87,8 +87,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 * {
-  direction: rtl;
+  /* direction: rtl; */
 }
 </style>
